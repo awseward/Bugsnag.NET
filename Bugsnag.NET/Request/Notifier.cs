@@ -1,26 +1,30 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class Notifier : INotifier
+    public class Notifier : INotifier
     {
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
+        string _name = "Bugsnag.NET";
 
-        public string Version
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Name { get { return _name; } }
 
-        public string Url
+        string _version = new Func<string>(() =>
         {
-            get { throw new NotImplementedException(); }
-        }
+            var assembly = typeof(Notifier).Assembly;
+            var location = assembly.Location;
+            return FileVersionInfo.GetVersionInfo(location).ProductVersion;
+        }).Invoke();
+
+        public string Version { get { return _version; } }
+
+
+        string _url = "https://github.com/awseward/Bugsnag.NET";
+
+        public string Url { get { return _url; } }
     }
 }

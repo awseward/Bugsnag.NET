@@ -7,12 +7,12 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IApp
+    public interface IApp
     {
         [JsonProperty("version")]
         string Version { get; }
 
-        [JsonProperty("releaseVersion")]
+        [JsonProperty("releaseStage")]
         string ReleaseStage { get; }
     }
 }

@@ -5,8 +5,13 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class User : IUser
+    public class User : IUser
     {
+        public User(object id)
+        {
+            Id = id;
+        }
+
         public object Id { get; set; }
 
         public string Name { get; set; }

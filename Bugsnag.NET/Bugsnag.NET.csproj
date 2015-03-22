@@ -44,9 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bugsnag.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\App.cs" />
     <Compile Include="Request\Device.cs" />
+    <Compile Include="Request\Error.cs" />
     <Compile Include="Request\Event.cs" />
     <Compile Include="Request\Interfaces\IApp.cs" />
     <Compile Include="Request\Interfaces\IDevice.cs" />

@@ -15,7 +15,7 @@ namespace Bugsnag.NET.Request
         [JsonProperty("message")]
         string Message { get; }
 
-        [JsonProperty("stackTrace")]
+        [JsonProperty("stacktrace")]
         IEnumerable<IStackTraceLine> Stacktrace { get; }
     }
 }

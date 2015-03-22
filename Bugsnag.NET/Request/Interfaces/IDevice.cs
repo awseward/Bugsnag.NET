@@ -7,7 +7,7 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IDevice
+    public interface IDevice
     {
         [JsonProperty("osVersion")]
         string OsVersion { get; }

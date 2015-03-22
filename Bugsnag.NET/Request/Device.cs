@@ -5,16 +5,16 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class Device : IDevice
+    public class Device : IDevice
     {
+        string _osVersion = Environment.OSVersion.VersionString;
+
         public string OsVersion
         {
-            get { throw new NotImplementedException(); }
+            get { return _osVersion; }
+            set { _osVersion = value; }
         }
 
-        public string Hostname
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Hostname { get; set; }
     }
 }

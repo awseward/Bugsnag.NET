@@ -1,35 +1,35 @@
-﻿using System;
+﻿using Bugsnag.NET.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bugsnag.NET.Request
 {
     class StackTraceLine : IStackTraceLine
     {
-        public string File
+        public static IEnumerable<IStackTraceLine> Build(Exception ex)
         {
-            get { throw new NotImplementedException(); }
+            foreach (var line in ex.ToLines())
+            {
+                yield return new StackTraceLine
+                {
+                    File = line.ParseFile(),
+                    LineNumber = line.ParseLineNumber(),
+                    Method = line.ParseMethodName()
+                };
+            }
         }
 
-        public int LineNumber
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string File { get; private set; }
 
-        public int? ColumnNumber
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int LineNumber { get; private set; }
 
-        public string Method
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int? ColumnNumber { get; private set; }
 
-        public bool InProject
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Method { get; private set; }
+
+        public bool InProject { get; private set; }
     }
 }

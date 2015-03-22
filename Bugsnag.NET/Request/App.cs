@@ -5,16 +5,10 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class App : IApp
+    public class App : IApp
     {
-        public string Version
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Version { get; set; }
 
-        public string ReleaseStage
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string ReleaseStage { get; set; }
     }
 }

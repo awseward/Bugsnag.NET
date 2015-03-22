@@ -8,19 +8,23 @@ namespace Bugsnag.NET.Request
 {
     class Notice : INotice
     {
-        public string ApiKey
+        public Notice(string apiKey, INotifier notifier, IEnumerable<IEvent> events)
         {
-            get { throw new NotImplementedException(); }
+            ApiKey = apiKey;
+            Notifier = notifier;
+            Events = events;
         }
 
-        public INotifier Notifier
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string ApiKey { get; private set; }
+
+        public INotifier Notifier { get; private set; }
+
+        IEnumerable<IEvent> _events;
 
         public IEnumerable<IEvent> Events
         {
-            get { throw new NotImplementedException(); }
+            get { return _events ?? Enumerable.Empty<Event>(); }
+            private set { _events = value; }
         }
     }
 }
