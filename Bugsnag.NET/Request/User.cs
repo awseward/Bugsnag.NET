@@ -7,19 +7,10 @@ namespace Bugsnag.NET.Request
 {
     class User : IUser
     {
-        public object Id
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public object Id { get; set; }
 
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Name { get; set; }
 
-        public string Email
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Email { get; set; }
     }
 }

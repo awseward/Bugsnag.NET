@@ -59,6 +59,7 @@
     <Compile Include="Request\Interfaces\IUser.cs" />
     <Compile Include="Request\Notice.cs" />
     <Compile Include="Request\Notifier.cs" />
+    <Compile Include="Request\Severity.cs" />
     <Compile Include="Request\StackTraceLine.cs" />
     <Compile Include="Request\Thread.cs" />
     <Compile Include="Request\User.cs" />
