@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.NET", "Bugsnag.NET\Bugsnag.NET.csproj", "{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.NET.Tests", "Bugsnag.NET.Tests\Bugsnag.NET.Tests.csproj", "{EB060C93-0CF6-4964-A020-981BAFECD22E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB060C93-0CF6-4964-A020-981BAFECD22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB060C93-0CF6-4964-A020-981BAFECD22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB060C93-0CF6-4964-A020-981BAFECD22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB060C93-0CF6-4964-A020-981BAFECD22E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
