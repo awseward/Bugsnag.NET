@@ -15,6 +15,12 @@ namespace Bugsnag.NET.Request
             set { _osVersion = value; }
         }
 
-        public string Hostname { get; set; }
+        string _hostname = Environment.MachineName;
+
+        public string Hostname
+        {
+            get { return _hostname; }
+            set { _hostname = value; }
+        }
     }
 }
