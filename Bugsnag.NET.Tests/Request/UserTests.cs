@@ -14,10 +14,10 @@ namespace Bugsnag.NET.Tests.Request
         static string _stringId = System.IO.Path.GetRandomFileName().Replace(".", "");
         static int _intId = 8675309;
         static object[] _commonIds = new object[] { _guidId, _stringId, _intId };
-        public static object[] CommonIds { get { return _commonIds; } }
-
         static string _name = "Robert Paulson";
         static string _email = "rpaulson@fight.club";
+
+        public static object[] CommonIds { get { return _commonIds; } }
 
         [TestCaseSource("CommonIds")]
         [Ignore("Possible bug in NUnit (`Test adapter sent back a result for an unknown test case.`)")]
@@ -61,9 +61,8 @@ namespace Bugsnag.NET.Tests.Request
 
         IUser _BuildUser(object id, string name, string email)
         {
-            return new User
+            return new User(id)
             {
-                Id = id,
                 Name = name,
                 Email = email
             };

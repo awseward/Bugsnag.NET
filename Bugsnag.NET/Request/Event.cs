@@ -11,11 +11,9 @@ namespace Bugsnag.NET.Request
     {
         public Event(Exception ex)
         {
-            Errors = ex.Unwrap().Select(e => new Error(e));
-            GroupingHash = ex.GetType().Name;
-            Context = string.Format("{0}::{1}",
-                ex.TargetSite.DeclaringType,
-                ex.TargetSite.Name);
+            Errors = _GetErrors(ex);
+            GroupingHash = _GetGroupingHash(ex);
+            Context = _GetContext(ex);
         }
 
         string _payloadVersion = "2";
@@ -55,5 +53,25 @@ namespace Bugsnag.NET.Request
         public IDevice Device { get; set; }
 
         public object MetaData { get; set; }
+
+        IEnumerable<IError> _GetErrors(Exception ex)
+        {
+            if (ex == null) { return Enumerable.Empty<IError>(); }
+            return ex.Unwrap().Select(e => new Error(e));
+        }
+
+        string _GetGroupingHash(Exception ex)
+        {
+            if (ex == null) { return ""; }
+            return ex.GetType().Name;
+        }
+
+        string _GetContext(Exception ex)
+        {
+            if (ex == null) { return ""; }
+            return string.Format("{0}::{1}",
+                ex.TargetSite.DeclaringType,
+                ex.TargetSite.Name);
+        }
     }
 }

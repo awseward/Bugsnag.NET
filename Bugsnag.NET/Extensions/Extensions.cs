@@ -8,10 +8,14 @@ namespace Bugsnag.NET.Extensions
 {
     static class Extensions
     {
-        /// <remarks>Not really thrilled with this...</remarks>
+        /// <remarks>Not sure I'm really thrilled with this...</remarks>
         public static IEnumerable<Exception> Unwrap(this Exception ex)
         {
-            if (ex.InnerException == null)
+            if (ex == null)
+            {
+                return Enumerable.Empty<Exception>();
+            }
+            else if (ex.InnerException == null)
             {
                 return new Exception[] { ex };
             }
@@ -21,6 +25,8 @@ namespace Bugsnag.NET.Extensions
 
         public static IEnumerable<string> ToLines(this Exception ex)
         {
+            if (ex == null) { return Enumerable.Empty<string>(); }
+
             return ex.StackTrace.Split(
                 new string[] { Environment.NewLine },
                 StringSplitOptions.RemoveEmptyEntries);
