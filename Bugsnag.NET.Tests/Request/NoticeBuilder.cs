@@ -56,7 +56,7 @@ namespace Bugsnag.NET.Tests.Request
             }
             catch (Exception ex)
             {
-                throw new Exception("This is the second wrapping exception", ex);
+                throw new Exception("Second wrapping exception", ex);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Bugsnag.NET.Tests.Request
             }
             catch (Exception ex)
             {
-                throw new Exception("This is the first wrapping exception", ex);
+                throw new Exception("First wrapping exception", ex);
             }
         }
     }
