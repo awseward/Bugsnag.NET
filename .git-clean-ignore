@@ -1,0 +1,3 @@
+.git-clean-ignore
+*.suo
+*.csproj.user
