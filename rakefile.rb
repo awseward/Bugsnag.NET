@@ -24,5 +24,31 @@ namespace :clean do
   end
 end
 
+namespace :nuget do
+  desc "Removes installed NuGet packages"
+  task :clean do
+    rm_rf "packages"
+  end
+
+  desc "Installs NuGet dependencies"
+  task :restore do
+    sh "nuget restore ."
+  end
+
+  task :pack => :build do
+    # FIXME: Un-hardcode this
+    sh "nuget pack Bugsnag.NET/Bugsnag.NET.csproj -Prop Configuration=Release"
+  end
+end
+
 desc "Cleans untracked/git-ignored files, except for patterns in `.git-clean-ignore`"
 task :clean => 'clean:clean'
+
+desc "Builds a NuGet package"
+task :nuget => 'nuget:pack'
+
+desc "Builds the project"
+task :build => ['nuget:clean', 'nuget:restore'] do
+  # FIXME: Un-hardcode this
+  sh "MSBuild.exe Bugsnag.NET.sln /p:Configuration=Release /target:'Clean;Rebuild'"
+end

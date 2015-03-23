@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Andrew Seward</authors>
+    <owners>Andrew Seward</owners>
+    <licenseUrl>https://raw.githubusercontent.com/awseward/Bugsnag.NET/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/awseward/Bugsnag.NET</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Bugsnag notifier client for .NET projects</description>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+</package>
