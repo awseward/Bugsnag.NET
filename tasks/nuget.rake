@@ -11,7 +11,9 @@ namespace :nuget do
 
   task :pack => :build do
     # FIXME: Un-hardcode this
-    sh "nuget pack Bugsnag.NET/Bugsnag.NET.csproj -Prop Configuration=Release"
+    dir = File.dirname Dir.glob('*/*.nuspec').first
+    csproj = Dir.glob("#{dir}/*.csproj").first
+    sh "nuget pack #{csproj} -Prop Configuration=Release"
   end
 end
 
