@@ -1,13 +1,8 @@
 namespace :clean do
   def git_clean_ignore_patterns
-    arr = []
     File.open(".git-clean-ignore", "r") do |f|
-      f.each_line do |line|
-        arr << line.chomp
-      end
+      return f.each_line.map(&:chomp)
     end
-
-    arr
   end
 
   def build_ignore_flags(patterns)
