@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class Event : IEvent
+    public class Event : IEvent
     {
         public Event(Exception ex)
         {

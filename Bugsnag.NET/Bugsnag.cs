@@ -53,23 +53,29 @@ namespace Bugsnag.NET
 
         readonly Severity _severity;
 
-        public void Notify(Exception ex, IUser user, object metaData)
+        public void Notify(IEvent evt)
         {
-            var evt = _BuildEvent(ex, user, metaData);
-            var notice = new Notice(ApiKey, Notifier, new IEvent[] { evt });
-
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-            var json = JsonConvert.SerializeObject(notice, settings);
-
-            var url = "https://notify.bugsnag.com";
-
-            new WebClient().UploadString(url, json);
+            Notify(evt, true);
         }
 
-        IEvent _BuildEvent(Exception ex, IUser user, object metaData)
+        public void Notify(IEvent evt, bool useSSL)
+        {
+            Notify(new IEvent[] { evt }, useSSL);
+        }
+
+        public void Notify(IEnumerable<IEvent> events)
+        {
+            Notify(events, true);
+        }
+
+        public void Notify(IEnumerable<IEvent> events, bool useSSL)
+        {
+            var notice = new Notice(ApiKey, Notifier, events);
+
+            BugsnagSender.Send(notice, useSSL);
+        }
+
+        public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {
             return new Event(ex)
             {
@@ -79,6 +85,14 @@ namespace Bugsnag.NET
                 Severity = _severity.ToString(),
                 MetaData = metaData,
             };
+        }
+
+        public IEnumerable<IEvent> GetEvents(IEnumerable<Exception> exs, IUser user, object metaData)
+        {
+            foreach (var ex in exs)
+            {
+                yield return GetEvent(ex, user, metaData);
+            }
         }
     }
 }

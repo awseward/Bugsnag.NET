@@ -7,7 +7,7 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IError
+    public interface IError
     {
         [JsonProperty("errorClass")]
         string ErrorClass { get; }

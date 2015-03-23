@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Bugsnag.NET.Request
 {
-    class StackTraceLine : IStackTraceLine
+    public class StackTraceLine : IStackTraceLine
     {
         public static IEnumerable<IStackTraceLine> Build(Exception ex)
         {

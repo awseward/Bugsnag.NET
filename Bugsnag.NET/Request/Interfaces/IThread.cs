@@ -7,7 +7,7 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IThread
+    public interface IThread
     {
         [JsonProperty("id")]
         object Id { get; }

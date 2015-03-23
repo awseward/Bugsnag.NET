@@ -20,7 +20,7 @@ namespace Bugsnag.NET.Extensions
                 return new Exception[] { ex };
             }
 
-            return (new Exception[] { ex }).Concat(Unwrap(ex.InnerException));
+            return ex.InnerException.Unwrap().Concat(new Exception[] { ex });
         }
 
         public static IEnumerable<string> ToLines(this Exception ex)

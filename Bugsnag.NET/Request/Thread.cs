@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class Thread : IThread
+    public class Thread : IThread
     {
         public object Id
         {

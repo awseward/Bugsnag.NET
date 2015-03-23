@@ -7,7 +7,7 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IEvent
+    public interface IEvent
     {
         [JsonProperty("payloadVersion")]
         string PayloadVersion { get; }

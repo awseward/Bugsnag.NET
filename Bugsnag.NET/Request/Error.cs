@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    class Error : IError
+    public class Error : IError
     {
         public Error(Exception ex)
         {

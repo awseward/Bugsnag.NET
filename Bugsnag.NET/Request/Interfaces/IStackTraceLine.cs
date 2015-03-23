@@ -7,7 +7,7 @@ using System.Text;
 namespace Bugsnag.NET.Request
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface IStackTraceLine
+    public interface IStackTraceLine
     {
         [JsonProperty("file")]
         string File { get; }

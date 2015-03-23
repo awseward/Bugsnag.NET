@@ -15,6 +15,9 @@ namespace Bugsnag.NET.Request
             Events = events;
         }
 
+        public Notice(string apiKey, INotifier notifier, IEvent evt)
+            : this(apiKey, notifier, new IEvent[] { evt }) { }
+
         public string ApiKey { get; private set; }
 
         public INotifier Notifier { get; private set; }
