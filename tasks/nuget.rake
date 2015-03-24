@@ -5,7 +5,7 @@ namespace :nuget do
   end
 
   desc "Installs NuGet dependencies"
-  task :restore do
+  task :restore => :clean do
     sh "nuget restore ."
   end
 
