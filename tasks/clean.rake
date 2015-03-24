@@ -26,3 +26,6 @@ end
 
 desc "Cleans untracked/git-ignored files, except for patterns in `.git-clean-ignore`"
 task :clean => 'clean:clean'
+
+task :cl => :clean
+task :cld => 'clean:dry'
