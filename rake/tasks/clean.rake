@@ -1,30 +1,36 @@
 namespace :clean do
-  def git_clean_ignore_patterns
+  def _get_ignore_patterns
     File.open(".git-clean-ignore", "r") do |f|
       return f.each_line.map(&:chomp)
     end
   end
 
-  def build_ignore_flags(patterns)
+  def _build_ignore_flags(patterns)
     patterns.map{ |p| "-e '#{p}'" }.join(' ')
   end
 
-  git_clean = "git clean"
-  base_flags = "xdf"
-  ignore_flags = build_ignore_flags git_clean_ignore_patterns
-  dry_flag = "n"
+  def git_clean(dry_run = false)
+    clean = "git clean"
+    base_flags = "xdf"
+    ignore_flags = _build_ignore_flags(_get_ignore_patterns)
+    dry_flag = "n"
+
+    flags = "#{base_flags}#{dry_run ? dry_flag : ''} #{ignore_flags}"
+
+    sh "#{clean} -#{flags}"
+  end
 
   task :clean do
-    sh "#{git_clean} -#{base_flags} #{ignore_flags}"
+    git_clean false
   end
 
   desc "Dry run of `clean:clean`"
   task :dry do
-    sh "#{git_clean} -#{base_flags}#{dry_flag} #{ignore_flags}"
+    git_clean true
   end
 end
 
-desc "Cleans untracked/git-ignored files, except for patterns in `.git-clean-ignore`"
+desc "Cleans untracked/git-ignored files, skipping patterns in `.git-clean-ignore`"
 task :clean => 'clean:clean'
 
 task :cl => :clean
