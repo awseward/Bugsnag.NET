@@ -63,7 +63,10 @@ namespace Bugsnag.NET.Request
         string _GetGroupingHash(Exception ex)
         {
             if (ex == null) { return ""; }
-            return ex.GetType().Name;
+            return string.Format(
+                "{0}: {1}",
+                ex.GetType().Name,
+                ex.Message);
         }
 
         string _GetContext(Exception ex)
