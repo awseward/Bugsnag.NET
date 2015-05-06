@@ -64,9 +64,9 @@ namespace Bugsnag.NET.Request
         {
             if (ex == null) { return ""; }
             return string.Format(
-                "{0}: {1}",
+                "{0} @ {1}",
                 ex.GetType().Name,
-                ex.Message);
+                _GetContext(ex));
         }
 
         string _GetContext(Exception ex)
