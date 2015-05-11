@@ -16,6 +16,13 @@ namespace Bugsnag.NET.Request
             Context = _GetContext(ex);
         }
 
+        public Event(IEnumerable<Exception> unwrapped)
+        {
+            Errors = _GetErrors(unwrapped);
+            GroupingHash = _GetGroupingHash(unwrapped);
+            Context = _GetContext(unwrapped);
+        }
+
         string _payloadVersion = "2";
 
         public string PayloadVersion
@@ -54,27 +61,49 @@ namespace Bugsnag.NET.Request
 
         public object MetaData { get; set; }
 
-        IEnumerable<IError> _GetErrors(Exception ex)
+        static IEnumerable<IError> _GetErrors(Exception ex)
         {
             if (ex == null) { return Enumerable.Empty<IError>(); }
-            return ex.Unwrap().Select(e => new Error(e));
+
+            return _GetErrors(ex.Unwrap());
         }
 
-        string _GetGroupingHash(Exception ex)
+        static IEnumerable<IError> _GetErrors(IEnumerable<Exception> unwrapped)
         {
-            if (ex == null) { return ""; }
+            return unwrapped.Select(ex => new Error(ex));
+        }
+
+        static string _GetGroupingHash(Exception ex)
+        {
+            if (ex == null) { return string.Empty; }
+
             return string.Format(
                 "{0} @ {1}",
                 ex.GetType().Name,
                 _GetContext(ex));
         }
 
-        string _GetContext(Exception ex)
+        static string _GetGroupingHash(IEnumerable<Exception> unwrapped)
         {
-            if (ex == null) { return ""; }
+            if (!unwrapped.Any()) { return string.Empty; }
+
+            return _GetGroupingHash(unwrapped.First());
+        }
+
+        static string _GetContext(Exception ex)
+        {
+            if (ex == null) { return string.Empty; }
+
             return string.Format("{0}::{1}",
                 ex.TargetSite.DeclaringType,
                 ex.TargetSite.Name);
+        }
+
+        static string _GetContext(IEnumerable<Exception> unwrapped)
+        {
+            if (!unwrapped.Any()) { return string.Empty; }
+
+            return _GetContext(unwrapped.First());
         }
     }
 }

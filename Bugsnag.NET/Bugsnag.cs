@@ -87,6 +87,18 @@ namespace Bugsnag.NET
             };
         }
 
+        public IEvent GetEvent(IEnumerable<Exception> unwrapped, IUser user, object metaData)
+        {
+            return new Event(unwrapped)
+            {
+                App = App,
+                Device = Device,
+                User = user,
+                Severity = _severity.ToString(),
+                MetaData = metaData,
+            };
+        }
+
         public IEnumerable<IEvent> GetEvents(IEnumerable<Exception> exs, IUser user, object metaData)
         {
             foreach (var ex in exs)
