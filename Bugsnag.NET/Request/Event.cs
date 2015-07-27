@@ -93,10 +93,12 @@ namespace Bugsnag.NET.Request
         static string _GetContext(Exception ex)
         {
             if (ex == null) { return string.Empty; }
+            var targetSite = ex.TargetSite;
 
-            return string.Format("{0}::{1}",
-                ex.TargetSite.DeclaringType,
-                ex.TargetSite.Name);
+            return targetSite == null ? "NullTargetSite" :
+                string.Format("{0}::{1}",
+                targetSite.DeclaringType,
+                targetSite.Name);
         }
 
         static string _GetContext(IEnumerable<Exception> unwrapped)
