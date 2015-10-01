@@ -25,7 +25,10 @@ namespace Bugsnag.NET.Extensions
 
         public static IEnumerable<string> ToLines(this Exception ex)
         {
-            if (ex == null || ex.StackTrace == null) { return Enumerable.Empty<string>(); }
+            if (ex == null || ex.StackTrace == null)
+            {
+                return new string[] { String.Empty };
+            }
 
             return ex.StackTrace.Split(
                 new string[] { Environment.NewLine },
