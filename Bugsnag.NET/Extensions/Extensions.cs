@@ -45,7 +45,8 @@ namespace Bugsnag.NET.Extensions
 
         public static string ParseMethodName(this string line)
         {
-            var match = Regex.Match(line, "at .+\\.([^\\.]+\\(.*\\))");
+            // to extract the full method name (with namespace)
+            var match = Regex.Match(line, "at ([^)]+[)])");
             if (match.Groups.Count < 2) { return "[method]"; }
 
             return match.Groups[1].Value;
