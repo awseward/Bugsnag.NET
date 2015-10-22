@@ -95,7 +95,7 @@ namespace Bugsnag.NET.Request
             if (ex == null) { return string.Empty; }
             var targetSite = ex.TargetSite;
 
-            return targetSite == null ? "NullTargetSite" :
+            return targetSite == null ? "null::null" :
                 string.Format("{0}::{1}",
                 targetSite.DeclaringType,
                 targetSite.Name);
