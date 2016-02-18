@@ -1,4 +1,5 @@
-# Bugsnag.NET
+# Bugsnag.NET [![Build status](https://ci.appveyor.com/api/projects/status/86j23g6eltupv6ox?svg=true)](https://ci.appveyor.com/project/mglodack/bugsnag-net)
+
 A .NET client for sending exception information to Bugsnag
 
 ## Usage
@@ -20,31 +21,31 @@ using BsReq = Bugsnag.NET.Request;
       };
   }
 
-  // Report an unhandled exception  
+  // Report an unhandled exception
   public void OnUnhandled(Exception ex)
   {
       Report(BsNET.Bugsnag.Error, ex);
   }
 
-  // Report a handled exception with `Warning` severity  
+  // Report a handled exception with `Warning` severity
   public void OnHandled_Warn(Exception ex)
   {
       Report(BsNet.Bugsnag.Warning, ex);
   }
-  
+
   // Report a handled exception with `Info` severity
   public void OnHandled_Info(Exception ex)
   {
       Report(BsNET.Bugsnag.Info, ex);
   }
-  
+
   void Report(BsNET.Bugsnag client, Exception ex)
   {
       var evt = client.GetEvent(ex, GetCurrentUser(), GetMetaData());
       client.Notify(evt);
   }
-  
+
   BsReq.IUser GetCurrentUser() { ... }
-  
+
   object GetMetadata() { ... }
 ```
