@@ -25,7 +25,10 @@ namespace Bugsnag.NET.Extensions
 
         public static IEnumerable<string> ToLines(this Exception ex)
         {
-            if (ex == null) { return Enumerable.Empty<string>(); }
+            if (ex == null || ex.StackTrace == null)
+            {
+                return new string[] { String.Empty };
+            }
 
             return ex.StackTrace.Split(
                 new string[] { Environment.NewLine },
@@ -42,7 +45,8 @@ namespace Bugsnag.NET.Extensions
 
         public static string ParseMethodName(this string line)
         {
-            var match = Regex.Match(line, "at .+\\.([^\\.]+\\(.*\\))");
+            // to extract the full method name (with namespace)
+            var match = Regex.Match(line, "at ([^)]+[)])");
             if (match.Groups.Count < 2) { return "[method]"; }
 
             return match.Groups[1].Value;

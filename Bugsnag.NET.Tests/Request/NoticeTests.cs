@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Bugsnag.NET.Request;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
@@ -22,6 +23,17 @@ namespace Bugsnag.NET.Tests.Request
             var jObject = JObject.Parse(json);
 
             Assert.IsTrue(jObject.IsValid(schema));
+        }
+
+        [Test]
+        public void StackIsAbsent()
+        {
+            const string InternalErrorMessage = "An internal error has occurred!";
+            Exception ex = new Exception(InternalErrorMessage, new Exception("Debug Info: " + Environment.NewLine + "Some debug information goes here..."));
+            var ev = new Event(ex);
+            var notice = new Notice("apikey", new Notifier(), ev);
+            var json = JsonConvert.SerializeObject(notice);
+            // should reach the end of function without any exception thrown
         }
 
         JsonSchema _GetSchema()
