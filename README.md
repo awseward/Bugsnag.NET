@@ -1,4 +1,4 @@
-# Bugsnag.NET [![Build status](https://ci.appveyor.com/api/projects/status/86j23g6eltupv6ox?svg=true)](https://ci.appveyor.com/project/mglodack/bugsnag-net) [![NuGet Status](http://nugetstatus.com/Bugsnag.NET.png)](http://nugetstatus.com/packages/Bugsnag.NET)
+# Bugsnag.NET [![Build status](https://ci.appveyor.com/api/projects/status/86j23g6eltupv6ox?svg=true)](https://ci.appveyor.com/project/mglodack/bugsnag-net) [![NuGet version](https://badge.fury.io/nu/Bugsnag.NET.svg)](https://badge.fury.io/nu/Bugsnag.NET) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 A .NET client for sending exception information to Bugsnag
 
