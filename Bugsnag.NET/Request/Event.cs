@@ -78,9 +78,20 @@ namespace Bugsnag.NET.Request
             if (ex == null) { return string.Empty; }
 
             return string.Format(
-                "{0} @ {1}",
-                ex.GetType().Name,
-                _GetContext(ex));
+                "{0} @ {1} : {2}",
+                _GetTypeName(ex),
+                _GetContext(ex),
+                _GetMessage(ex));
+        }
+
+        static string _GetMessage(Exception ex)
+        {
+            return ex.Message;
+        }
+
+        static string _GetTypeName(Exception ex)
+        {
+            return ex.GetType().Name;
         }
 
         static string _GetGroupingHash(IEnumerable<Exception> unwrapped)

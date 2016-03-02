@@ -79,8 +79,18 @@ namespace Bugsnag.PCL.Request
 
             return string.Format(
                 "{0} @ {1}",
-                ex.GetType().Name,
-                _GetContext(ex));
+                _GetTypeName(ex),
+                _GetMessage(ex));
+        }
+
+        static string _GetMessage(Exception ex)
+        {
+            return ex.Message;
+        }
+
+        static string _GetTypeName(Exception ex)
+        {
+            return ex.GetType().Name;
         }
 
         static string _GetGroupingHash(IEnumerable<Exception> unwrapped)
