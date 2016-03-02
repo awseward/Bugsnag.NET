@@ -41,7 +41,7 @@
     <Compile Include="Request\App.cs" />
     <Compile Include="Request\Error.cs" />
     <Compile Include="Request\Device.cs" />
-    <Compile Include="Request\Interfaces\Event.cs" />
+    <Compile Include="Request\Event.cs" />
     <Compile Include="Request\Interfaces\IDevice.cs" />
     <Compile Include="Request\Interfaces\IApp.cs" />
     <Compile Include="Request\Interfaces\IError.cs" />
