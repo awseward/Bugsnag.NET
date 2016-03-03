@@ -1,0 +1,4 @@
+source https://nuget.org/api/v2
+
+nuget fake
+nuget NUnit.Runners 2.6.4
