@@ -26,7 +26,7 @@ namespace Bugsnag.PCL.Extensions
         {
             if (ex == null || ex.StackTrace == null)
             {
-                return Enumerable.Empty<string>();
+                return new string[] { String.Empty };
             }
 
             return ex.StackTrace.Split(
