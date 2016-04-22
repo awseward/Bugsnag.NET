@@ -47,5 +47,37 @@ using BsReq = Bugsnag.NET.Request;
 
   BsReq.IUser GetCurrentUser() { ... }
 
-  object GetMetadata() { ... }
+  object GetMetadata() { /* See Metadata section below */ }
+```
+
+### Metadata
+Metadata can be passed in as anonymous types, as Bugsnag expects key/value
+pairs for these.
+
+For example, the following will create two extra tabs in Bugnsag's online
+interface which will have the labels "firstTab" and "secondTab", respectively:
+```cs
+object GetMetadata() {
+{
+  return new {
+    firstTab = new {
+      someKey = "some value",
+    },
+    secondTab = new {
+      anotherKey = "another value",
+    },
+  };
+}
+```
+
+For keys/values at the root level of this metadata object, Bugsnag creates a tab
+for you with the label "Custom", and displays them there. That case would look
+like this:
+```cs
+object GetMetadata() {
+  return new {
+    keyUnderCustomTab = "some value",
+    anotherKeyUnderCustomTab = "another value",
+  }
+}
 ```
