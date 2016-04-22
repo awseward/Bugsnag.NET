@@ -19,6 +19,16 @@ namespace Bugsnag.PCL.Request
             }
         }
 
+        internal static IEnumerable<IStackTraceLine> BuildWithContext(string memberName, string sourceFilePath, int sourceLineNumber)
+        {
+            yield return new StackTraceLine
+            {
+                File = sourceFilePath,
+                LineNumber = sourceLineNumber,
+                Method = memberName
+            };
+        }
+
         public string File { get; private set; }
 
         public int LineNumber { get; private set; }

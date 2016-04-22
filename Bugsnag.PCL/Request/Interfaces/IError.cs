@@ -13,6 +13,6 @@ namespace Bugsnag.PCL.Request
         string Message { get; }
 
         [JsonProperty("stacktrace")]
-        IEnumerable<IStackTraceLine> Stacktrace { get; }
+        IEnumerable<IStackTraceLine> Stacktrace { get; set; }
     }
 }

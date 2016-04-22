@@ -111,5 +111,15 @@ namespace Bugsnag.PCL.Request
         {
             return _unknownMethod;
         }
+
+        public void AddContext(string memberName, string sourceFilePath, int sourceLineNumber)
+        {
+            Context = memberName;
+            
+            foreach (var error in Errors.Where(error => !error.Stacktrace.Any()))
+            {
+                error.Stacktrace = StackTraceLine.BuildWithContext(memberName, sourceFilePath, sourceLineNumber);
+            }
+        }
     }
 }
