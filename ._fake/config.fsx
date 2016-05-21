@@ -14,7 +14,7 @@ module Build =
   let TestAssemblies = !! "Bugsnag.NET.Tests/**/*.Tests.dll" -- "**/obj/**/*.Tests.dll"
   let DotNetVersion = "4.5"
   let MSBuildArtifacts = !! "**/bin/**.*" ++ "**/obj/**/*.*"
-  let AssemblyInfoFilePaths = !! "**/AssemblyInfo.cs" ++ "**/AssemblyInfo.fs"
+  let AssemblyInfoFilePaths = !! "SharedAssemblyInfo.cs"
 
 module Nuget =
   let ApiEnvVar      = "BUGSNAG_NET_NUGET_API_KEY"
