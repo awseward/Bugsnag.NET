@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.NET", "Bugsnag.NET\Bugsnag.NET.csproj", "{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.NET.Tests", "Bugsnag.NET.Tests\Bugsnag.NET.Tests.csproj", "{EB060C93-0CF6-4964-A020-981BAFECD22E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.PCL", "Bugsnag.PCL\Bugsnag.PCL.csproj", "{75AD67EC-189F-4DF7-80A6-5DABC5B77A64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2EF2E38-01B6-4A21-853B-C07C2582D637}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
