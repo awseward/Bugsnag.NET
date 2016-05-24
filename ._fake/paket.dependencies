@@ -1,5 +1,6 @@
 source https://nuget.org/api/v2
 
 nuget fake
+nuget Nuget.CommandLine
 nuget fsharp.faketargets
 nuget nunit.runners 2.6.4
