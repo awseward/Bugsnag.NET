@@ -19,7 +19,7 @@ namespace Bugsnag.PCL.Extensions
                 return new Exception[] { ex };
             }
 
-            return ex.InnerException.Unwrap().Concat(new Exception[] { ex });
+            return new Exception[] { ex }.Concat(ex.InnerException.Unwrap());
         }
 
         public static IEnumerable<string> ToLines(this Exception ex)
