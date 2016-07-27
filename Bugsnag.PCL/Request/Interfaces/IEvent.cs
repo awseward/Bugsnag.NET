@@ -32,5 +32,7 @@ namespace Bugsnag.PCL.Request
 
         [JsonProperty("metaData")]
         object MetaData { get; }
+
+        void AddContext(string memberName, string sourceFilePath, int sourceLineNumber);
     }
 }

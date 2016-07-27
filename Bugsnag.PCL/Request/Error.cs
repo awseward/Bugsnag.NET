@@ -16,6 +16,6 @@ namespace Bugsnag.PCL.Request
 
         public string Message { get; private set; }
 
-        public IEnumerable<IStackTraceLine> Stacktrace { get; private set; }
+        public IEnumerable<IStackTraceLine> Stacktrace { get; set; }
     }
 }
