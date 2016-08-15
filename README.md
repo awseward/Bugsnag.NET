@@ -59,14 +59,17 @@ interface which will have the labels "firstTab" and "secondTab", respectively:
 ```cs
 object GetMetadata() {
 {
-  return new {
-    firstTab = new {
-      someKey = "some value",
-    },
-    secondTab = new {
-      anotherKey = "another value",
-    },
-  };
+    return new
+    {
+        firstTab = new
+        {
+            someKey = "some value",
+        },
+        secondTab = new
+        {
+            anotherKey = "another value",
+        },
+    };
 }
 ```
 
@@ -75,9 +78,10 @@ for you with the label "Custom", and displays them there. That case would look
 like this:
 ```cs
 object GetMetadata() {
-  return new {
-    keyUnderCustomTab = "some value",
-    anotherKeyUnderCustomTab = "another value",
-  }
+    return new
+    {
+        keyUnderCustomTab = "some value",
+        anotherKeyUnderCustomTab = "another value",
+    }
 }
 ```
