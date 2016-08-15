@@ -2,6 +2,16 @@
 
 A .NET client for sending exception information to Bugsnag
 
+## Installation
+```
+Install-Package Bugsnag.NET
+```
+
+### For PCLs
+```
+Install-Package Bugsnag.PCL
+```
+
 ## Usage
 A simple example of how one might use this client.
 ```csharp
