@@ -77,7 +77,7 @@ namespace Bugsnag.NET
         private Bugsnag(Severity severity)
         {
             _severity = severity;
-            _snagger = new Bugsnagger
+            Snagger = new Bugsnagger
             {
                 ApiKey = ApiKey,
                 Notifier = Notifier,
@@ -88,12 +88,12 @@ namespace Bugsnag.NET
 
         readonly Severity _severity;
 
-        readonly IBugsnagger _snagger;
+        public IBugsnagger Snagger { get; }
 
-        public void Notify(IEvent evt) => _snagger.Notify(evt);
-        public void Notify(IEvent evt, bool useSSL) => _snagger.Notify(evt, useSSL);
-        public void Notify(IEnumerable<IEvent> events) => _snagger.Notify(events);
-        public void Notify(IEnumerable<IEvent> events, bool useSSL) => _snagger.Notify(events, useSSL);
+        public void Notify(IEvent evt) => Snagger.Notify(evt);
+        public void Notify(IEvent evt, bool useSSL) => Snagger.Notify(evt, useSSL);
+        public void Notify(IEnumerable<IEvent> events) => Snagger.Notify(events);
+        public void Notify(IEnumerable<IEvent> events, bool useSSL) => Snagger.Notify(events, useSSL);
 
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {
