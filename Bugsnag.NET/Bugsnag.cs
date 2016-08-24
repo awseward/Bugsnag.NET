@@ -10,57 +10,41 @@ using System.IO;
 
 namespace Bugsnag.NET
 {
-    public class Bugsnag
+    public interface IBugsnagger
     {
-        private Bugsnag(Severity severity)
+        string ApiKey { get; set; }
+
+        INotifier Notifier { get; set; }
+        IApp App { get; set; }
+        IDevice Device { get; set; }
+
+        void Notify(IEvent @event);
+        void Notify(IEvent @event, bool useHttps);
+        void Notify(IEnumerable<IEvent> events);
+        void Notify(IEnumerable<IEvent> events, bool useHttps);
+    }
+
+    public partial class Bugsnagger : IBugsnagger
+    {
+        public static IBugsnagger Default { get; } = new Bugsnagger();
+    }
+
+    public partial class Bugsnagger : IBugsnagger
+    {
+        public string ApiKey { get; set; }
+
+        public IApp App { get; set; } = new App();
+        public IDevice Device { get; set; } = new Device();
+        public INotifier Notifier { get; set; } = new Notifier();
+
+        public void Notify(IEvent @event)
         {
-            _severity = severity;
+            Notify(@event, true);
         }
 
-        static readonly Bugsnag _error = new Bugsnag(Severity.Error);
-        static readonly Bugsnag _warning = new Bugsnag(Severity.Warning);
-        static readonly Bugsnag _info = new Bugsnag(Severity.Info);
-
-        public static Bugsnag Error { get { return _error; } }
-        public static Bugsnag Warning { get { return _warning; } }
-        public static Bugsnag Info { get { return _info; } }
-
-        public static string ApiKey { get; set; }
-
-        static INotifier _notifier = new Notifier();
-
-        public static INotifier Notifier
+        public void Notify(IEvent @event, bool useHttps)
         {
-            get { return _notifier; }
-            set { _notifier = value; }
-        }
-
-        static IApp _app = new App();
-
-        public static IApp App
-        {
-            get { return _app; }
-            set { _app = value; }
-        }
-
-        static IDevice _device = new Device();
-
-        public static IDevice Device
-        {
-            get { return _device; }
-            set { _device = value; }
-        }
-
-        readonly Severity _severity;
-
-        public void Notify(IEvent evt)
-        {
-            Notify(evt, true);
-        }
-
-        public void Notify(IEvent evt, bool useSSL)
-        {
-            Notify(new IEvent[] { evt }, useSSL);
+            Notify(new List<IEvent> { @event }, useHttps);
         }
 
         public void Notify(IEnumerable<IEvent> events)
@@ -68,12 +52,48 @@ namespace Bugsnag.NET
             Notify(events, true);
         }
 
-        public void Notify(IEnumerable<IEvent> events, bool useSSL)
+        public void Notify(IEnumerable<IEvent> events, bool useHttps)
         {
             var notice = new Notice(ApiKey, Notifier, events);
 
-            BugsnagSender.Send(notice, useSSL);
+            BugsnagSender.Send(notice, useHttps);
         }
+    }
+
+    public partial class Bugsnag
+    {
+        public static Bugsnag Error => new Bugsnag(Severity.Error);
+        public static Bugsnag Warning => new Bugsnag(Severity.Warning);
+        public static Bugsnag Info => new Bugsnag(Severity.Info);
+
+        public static string ApiKey { get; set; }
+        public static INotifier Notifier { get; set; } = new Notifier();
+        public static IApp App { get; set; } = new App();
+        public static IDevice Device { get; set; } = new Device();
+    }
+
+    public partial class Bugsnag
+    {
+        private Bugsnag(Severity severity)
+        {
+            _severity = severity;
+            _snagger = new Bugsnagger
+            {
+                ApiKey = ApiKey,
+                Notifier = Notifier,
+                App = App,
+                Device = Device,
+            };
+        }
+
+        readonly Severity _severity;
+
+        readonly IBugsnagger _snagger;
+
+        public void Notify(IEvent evt) => _snagger.Notify(evt);
+        public void Notify(IEvent evt, bool useSSL) => _snagger.Notify(evt, useSSL);
+        public void Notify(IEnumerable<IEvent> events) => _snagger.Notify(events);
+        public void Notify(IEnumerable<IEvent> events, bool useSSL) => _snagger.Notify(events, useSSL);
 
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {
