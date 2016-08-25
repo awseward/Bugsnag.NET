@@ -55,6 +55,7 @@ namespace Bugsnag.NET.Tests
         static void _OnUnhandledException(Exception ex) => _Bugsnagger.Error(ex, null, null);
     }
 
+    // NOTE: This is mostly here to check for backwards compatibility
     class StaticApproachApplication
     {
         public static void Main()
