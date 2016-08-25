@@ -13,13 +13,55 @@ namespace Bugsnag.NET.Tests
     {
         [Test]
         [Ignore]
-        public void SendAnError()
+        public void SendAnError_StaticApproach()
         {
-            ExampleApplication.Main();
+            StaticApproachApplication.Main();
+        }
+
+        [Test]
+        [Ignore]
+        public void SendAnError_InstanceApproach()
+        {
+            InstanceApproachApplication.Main();
         }
     }
 
-    class ExampleApplication
+    class InstanceApproachApplication
+    {
+        public static void Main()
+        {
+            try
+            {
+                // Main bulk of app code would go here
+
+                throw new ApplicationException("Hello, Bugsnag!");
+            }
+            catch (Exception ex)
+            {
+                _OnUnhandledException(ex);
+            }
+        }
+
+        static IBugsnagger _Bugsnagger { get; } = new Bugsnagger
+        {
+            ApiKey = Utils.ReadApiKey(),
+            App = new BsReq.App
+            {
+                Version = "1.2.3",
+                ReleaseStage = "test",
+            },
+        };
+
+        static void _OnUnhandledException(Exception ex)
+        {
+            // FIXME: Event creation is still a little funky...
+            var @event = BsNET.Bugsnag.Error.GetEvent(ex, null, null);
+
+            _Bugsnagger.Notify(@event);
+        }
+    }
+
+    class StaticApproachApplication
     {
         public static void Main()
         {
@@ -39,10 +81,10 @@ namespace Bugsnag.NET.Tests
 
         static void _InitBugsnag()
         {
-            BsNET.Bugsnag.ApiKey = _ReadApiKey();
+            BsNET.Bugsnag.ApiKey = Utils.ReadApiKey();
             BsNET.Bugsnag.App = new BsReq.App
             {
-                Version = "5.6.7",
+                Version = "1.2.3",
                 ReleaseStage = "test",
             };
         }
@@ -54,8 +96,11 @@ namespace Bugsnag.NET.Tests
 
             client.Notify(@event);
         }
+    }
 
-        static string _ReadApiKey()
+    static class Utils
+    {
+        public static string ReadApiKey()
         {
             var envVarName = "BUGSNAG_NET_API_KEY";
             var envVarType = EnvironmentVariableTarget.Machine;
