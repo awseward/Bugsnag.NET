@@ -34,7 +34,7 @@ namespace Bugsnag.NET.Tests
             {
                 // Main bulk of app code would go here
 
-                throw new ApplicationException("Hello, Bugsnag!");
+                Utils.TriggerError();
             }
             catch (Exception ex)
             {
@@ -52,15 +52,10 @@ namespace Bugsnag.NET.Tests
             },
         };
 
-        static void _OnUnhandledException(Exception ex)
-        {
-            var snagger = _Bugsnagger;
-            var @event = snagger.CreateEvent(BsReq.Severity.Error, ex, null, null);
-
-            snagger.Notify(@event);
-        }
+        static void _OnUnhandledException(Exception ex) => _Bugsnagger.Error(ex, null, null);
     }
 
+    // NOTE: This is mostly here to check for backwards compatibility
     class StaticApproachApplication
     {
         public static void Main()
@@ -71,7 +66,7 @@ namespace Bugsnag.NET.Tests
             {
                 // Main bulk of app code would go here
 
-                throw new ApplicationException("Hello, Bugsnag!");
+                Utils.TriggerError();
             }
             catch (Exception ex)
             {
@@ -100,6 +95,11 @@ namespace Bugsnag.NET.Tests
 
     static class Utils
     {
+        public static void TriggerError()
+        {
+            throw new ApplicationException($"Hello, Bugsnag! {Guid.NewGuid()}");
+        }
+
         public static string ReadApiKey()
         {
             var envVarName = "BUGSNAG_NET_API_KEY";
