@@ -18,6 +18,10 @@ namespace Bugsnag.NET
         IApp App { get; set; }
         IDevice Device { get; set; }
 
+        void Error(Exception ex, IUser user, object metadata);
+        void Warning(Exception ex, IUser user, object metadata);
+        void Info(Exception ex, IUser user, object metadata);
+
         void Notify(IEvent @event);
         void Notify(IEvent @event, bool useHttps);
         void Notify(IEnumerable<IEvent> events);
@@ -36,6 +40,27 @@ namespace Bugsnag.NET
         public IApp App { get; set; } = new App();
         public IDevice Device { get; set; } = new Device();
         public INotifier Notifier { get; set; } = new Notifier();
+
+        public void Error(Exception ex, IUser user, object metadata)
+        {
+            var @event = this.CreateEvent(Severity.Error, ex, user, metadata);
+
+            Notify(@event);
+        }
+
+        public void Warning(Exception ex, IUser user, object metadata)
+        {
+            var @event = this.CreateEvent(Severity.Warning, ex, user, metadata);
+
+            Notify(@event);
+        }
+
+        public void Info(Exception ex, IUser user, object metadata)
+        {
+            var @event = this.CreateEvent(Severity.Info, ex, user, metadata);
+
+            Notify(@event);
+        }
 
         public void Notify(IEvent @event)
         {
