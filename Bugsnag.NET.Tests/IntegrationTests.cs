@@ -34,7 +34,7 @@ namespace Bugsnag.NET.Tests
             {
                 // Main bulk of app code would go here
 
-                throw new ApplicationException("Hello, Bugsnag!");
+                Utils.TriggerError();
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace Bugsnag.NET.Tests
             {
                 // Main bulk of app code would go here
 
-                throw new ApplicationException("Hello, Bugsnag!");
+                Utils.TriggerError();
             }
             catch (Exception ex)
             {
@@ -95,6 +95,11 @@ namespace Bugsnag.NET.Tests
 
     static class Utils
     {
+        public static void TriggerError()
+        {
+            throw new ApplicationException($"Hello, Bugsnag! {Guid.NewGuid()}");
+        }
+
         public static string ReadApiKey()
         {
             var envVarName = "BUGSNAG_NET_API_KEY";
