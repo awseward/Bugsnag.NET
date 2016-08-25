@@ -113,14 +113,7 @@ class Program
 
     static void _NotifyBugsnag(Exception ex)
     {
-        var snagger = Bugsnagger.Default;
-        var snagEvent = snagger.CreateEvent(
-            BsReq.Severity.Error,
-            ex,
-            _GetUser(),
-            _GetMetadata());
-
-        snagger.Notify(snagEvent);
+        Bugsnagger.Default.Error(ex, _GetUser(), _GetMetadata());
     }
 
     static BsReq.IUser _GetUser() { /* ... */ }
@@ -147,8 +140,7 @@ class Program
         }
         catch (Exception ex)
         {
-            var snagEvent = _Snagger.CreateEvent(BsReq.Severity.Error, ex, null, null);
-            _Snagger.Notify(snagEvent);
+            _Snagger.Error(ex, _GetUser(), _GetMetadata());
 
             throw;
         }
