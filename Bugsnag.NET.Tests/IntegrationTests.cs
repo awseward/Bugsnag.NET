@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bugsnag.NET.Extensions;
 using NUnit.Framework;
 using BsNET = Bugsnag.NET;
 using BsReq = Bugsnag.NET.Request;
 
 namespace Bugsnag.NET.Tests
 {
+    [Ignore]
     public class IntegrationTests
     {
         [Test]
-        [Ignore]
         public void SendAnError_StaticApproach()
         {
             StaticApproachApplication.Main();
         }
 
         [Test]
-        [Ignore]
         public void SendAnError_InstanceApproach()
         {
             InstanceApproachApplication.Main();
@@ -54,10 +54,10 @@ namespace Bugsnag.NET.Tests
 
         static void _OnUnhandledException(Exception ex)
         {
-            // FIXME: Event creation is still a little funky...
-            var @event = BsNET.Bugsnag.Error.GetEvent(ex, null, null);
+            var snagger = _Bugsnagger;
+            var @event = snagger.CreateEvent(BsReq.Severity.Error, ex, null, null);
 
-            _Bugsnagger.Notify(@event);
+            snagger.Notify(@event);
         }
     }
 

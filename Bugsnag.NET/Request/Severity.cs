@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Bugsnag.NET.Request
 {
-    abstract class Severity
+    public abstract class Severity
     {
         private Severity() { }
 
