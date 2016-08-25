@@ -52,13 +52,7 @@ namespace Bugsnag.NET.Tests
             },
         };
 
-        static void _OnUnhandledException(Exception ex)
-        {
-            var snagger = _Bugsnagger;
-            var @event = snagger.CreateEvent(BsReq.Severity.Error, ex, null, null);
-
-            snagger.Notify(@event);
-        }
+        static void _OnUnhandledException(Exception ex) => _Bugsnagger.Error(ex, null, null);
     }
 
     class StaticApproachApplication
