@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="ExceptionExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="Request\NoticeBuilder.cs" />
     <Compile Include="Request\NoticeTests.cs" />
     <Compile Include="Request\UserTests.cs" />
