@@ -14,21 +14,46 @@ namespace Bugsnag.NET.Tests
     public class IntegrationTests
     {
         [Test]
-        public void SendAnError_StaticApproach()
+        public void SendError_StaticApproach()
         {
             StaticApproachApplication.Main();
         }
 
         [Test]
-        public void SendAnError_InstanceApproach()
+        public void SendError_InstanceApproach()
         {
-            InstanceApproachApplication.Main();
+            new InstanceApproachApplication(
+                (snagger, ex) => snagger.Error(ex, null, null)
+            ).Run();
+        }
+
+        [Test]
+        public void SendWarning_Instance()
+        {
+            new InstanceApproachApplication(
+                (snagger, ex) => snagger.Warning(ex, null, null)
+            ).Run();
+        }
+
+        [Test]
+        public void SendInfo_InstanceApproach()
+        {
+            new InstanceApproachApplication(
+                (snagger, ex) => snagger.Info(ex, null, null)
+            ).Run();
         }
     }
 
     class InstanceApproachApplication
     {
-        public static void Main()
+        public InstanceApproachApplication(Action<IBugsnagger, Exception> notifyBugsnag)
+        {
+            _notifyBugsnag = notifyBugsnag ?? ( (snagger, ex) => { } );
+        }
+
+        readonly Action<IBugsnagger, Exception> _notifyBugsnag;
+
+        public void Run()
         {
             try
             {
@@ -52,7 +77,7 @@ namespace Bugsnag.NET.Tests
             },
         };
 
-        static void _OnUnhandledException(Exception ex) => _Bugsnagger.Error(ex, null, null);
+        void _OnUnhandledException(Exception ex) => _notifyBugsnag(_Bugsnagger, ex);
     }
 
     // NOTE: This is mostly here to check for backwards compatibility
