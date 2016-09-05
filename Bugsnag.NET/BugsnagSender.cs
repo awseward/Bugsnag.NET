@@ -1,37 +1,23 @@
-﻿using Bugsnag.NET.Request;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Bugsnag.Common;
+using Bugsnag.NET.Request;
+using Newtonsoft.Json;
 
 namespace Bugsnag.NET
 {
-    class BugsnagSender
+    static class BugsnagSender
     {
-        static Uri _uri = new Uri("http://notify.bugsnag.com");
-        static Uri _sslUri = new Uri("https://notify.bugsnag.com");
-        static JsonSerializerSettings _settings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        };
+        public static IClient Client { get; } = new BugsnagClient();
 
-        public static void Send(INotice notice)
-        {
-            Send(notice, true);
-        }
+        [Obsolete("All this does is delegate to an IClient instance. Prefer going straight to that.")]
+        public static void Send(INotice notice) => Client.Send(notice);
 
-        public static void Send(INotice notice, bool useSSL)
-        {
-            var uri = _GetUri(useSSL);
-            var json = JsonConvert.SerializeObject(notice, _settings);
-
-            new WebClient().UploadString(uri, json);
-        }
-
-        static Uri _GetUri(bool useSSL)
-        {
-            return (useSSL) ? _sslUri : _uri;
-        }
+        [Obsolete("All this does is delegate to an IClient instance. Prefer going straight to that.")]
+        public static void Send(INotice notice, bool useSSL) => Client.Send(notice, useSSL);
     }
 }

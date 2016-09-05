@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Bugsnag.PCL.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
-    interface INotice
+    public interface INotice
     {
         [JsonProperty("apiKey")]
         string ApiKey { get; }

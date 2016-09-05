@@ -12,4 +12,7 @@
     <description>A portable class library Bugsnag client for .NET projects</description>
     <copyright>Copyright 2016</copyright>
   </metadata>
+  <files>
+    <file src="bin\Release\Bugsnag.Common.dll" target="lib\net45" />
+  </files>
 </package>

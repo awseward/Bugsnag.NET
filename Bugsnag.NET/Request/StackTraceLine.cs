@@ -1,9 +1,10 @@
-﻿using Bugsnag.NET.Extensions;
+﻿using Bugsnag.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
@@ -20,6 +21,16 @@ namespace Bugsnag.NET.Request
                     Method = line.ParseMethodName()
                 };
             }
+        }
+
+        internal static IEnumerable<IStackTraceLine> Build(string memberName, string sourceFilePath, int sourceLineNumber)
+        {
+            yield return new StackTraceLine
+            {
+                File = sourceFilePath,
+                LineNumber = sourceLineNumber,
+                Method = memberName
+            };
         }
 
         public string File { get; private set; }

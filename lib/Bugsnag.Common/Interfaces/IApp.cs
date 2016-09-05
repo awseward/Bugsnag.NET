@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bugsnag.NET.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
     public interface IApp

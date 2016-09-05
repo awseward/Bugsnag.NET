@@ -1,38 +1,21 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Bugsnag.Common;
 using Bugsnag.PCL.Request;
 using Newtonsoft.Json;
 
 namespace Bugsnag.PCL
 {
-    class BugsnagSender
+    static class BugsnagSender
     {
-        static Uri _uri = new Uri("http://notify.bugsnag.com");
-        static Uri _sslUri = new Uri("https://notify.bugsnag.com");
-        static JsonSerializerSettings _settings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        };
+        public static IClient Client { get; } = new BugsnagClient();
 
-        public static async Task<HttpResponseMessage> SendAsync(INotice notice)
-        {
-            return await SendAsync(notice, true);
-        }
+        [Obsolete("All this does is delegate to an IClient instance. Prefer going straight to that.")]
+        public static Task<HttpResponseMessage> SendAsync(INotice notice) => Client.SendAsync(notice);
 
-        public static async Task<HttpResponseMessage> SendAsync(INotice notice, bool useSSL)
-        {
-            var uri = _GetUri(useSSL);
-            var json = JsonConvert.SerializeObject(notice, _settings);
-
-            var content = new StringContent(json);
-
-            return await new HttpClient().PostAsync(uri, content);
-        }
-
-        static Uri _GetUri(bool useSSL)
-        {
-            return useSSL ? _sslUri : _uri;
-        }
+        [Obsolete("All this does is delegate to an IClient instance. Prefer going straight to that.")]
+        public static Task<HttpResponseMessage> SendAsync(INotice notice, bool useSSL) => Client.SendAsync(notice, useSSL);
     }
 }

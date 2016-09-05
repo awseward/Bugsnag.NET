@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bugsnag.PCL.Extensions;
+using Bugsnag.Common;
+using Bugsnag.Common.Extensions;
 
 namespace Bugsnag.PCL.Request
 {
@@ -21,18 +22,9 @@ namespace Bugsnag.PCL.Request
             Context = _GetContext(unwrapped);
         }
 
-        static readonly string _unknownMethod = "UNKNOWN_METHOD";
-
-        string _payloadVersion = "2";
-
-        public string PayloadVersion
-        {
-            get { return _payloadVersion; }
-            set { _payloadVersion = value; }
-        }
+        public string PayloadVersion { get; set; } = "2";
 
         IEnumerable<IError> _errors;
-
         public IEnumerable<IError> Errors
         {
             get { return _errors ?? Enumerable.Empty<IError>(); }
@@ -40,7 +32,6 @@ namespace Bugsnag.PCL.Request
         }
 
         IEnumerable<IThread> _threads;
-
         public IEnumerable<IThread> Threads
         {
             get { return _threads ?? Enumerable.Empty<IThread>(); }
@@ -102,15 +93,12 @@ namespace Bugsnag.PCL.Request
 
         // NOTE: Unable to grab TargetSite from Exception in Portable class library
         // TODO: Find an alternative
-        static string _GetContext(Exception ex)
-        {
-            return _unknownMethod;
-        }
+        static IExceptionInspector _exceptionInspector = new ExceptionInspector(ex => null);
 
-        static string _GetContext(IEnumerable<Exception> unwrapped)
-        {
-            return _unknownMethod;
-        }
+        static string _GetContext(Exception ex) => _exceptionInspector.GetContext(ex);
+
+        static string _GetContext(IEnumerable<Exception> unwrapped) =>
+            _exceptionInspector.GetContext(unwrapped.FirstOrDefault());
 
         public void AddContext(string memberName, string sourceFilePath, int sourceLineNumber)
         {
@@ -118,7 +106,7 @@ namespace Bugsnag.PCL.Request
             
             foreach (var error in Errors.Where(error => !error.Stacktrace.Any()))
             {
-                error.Stacktrace = StackTraceLine.BuildWithContext(memberName, sourceFilePath, sourceLineNumber);
+                error.Stacktrace = StackTraceLine.Build(memberName, sourceFilePath, sourceLineNumber);
             }
         }
     }

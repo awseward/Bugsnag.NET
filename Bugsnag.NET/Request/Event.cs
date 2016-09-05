@@ -1,9 +1,10 @@
-﻿using Bugsnag.NET.Extensions;
+﻿using Bugsnag.Common.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
@@ -23,16 +24,9 @@ namespace Bugsnag.NET.Request
             Context = _GetContext(unwrapped);
         }
 
-        string _payloadVersion = "2";
-
-        public string PayloadVersion
-        {
-            get { return _payloadVersion; }
-            set { _payloadVersion = value; }
-        }
+        public string PayloadVersion { get; set; } = "2";
 
         IEnumerable<IError> _errors;
-
         public IEnumerable<IError> Errors
         {
             get { return _errors ?? Enumerable.Empty<IError>(); }
@@ -40,7 +34,6 @@ namespace Bugsnag.NET.Request
         }
 
         IEnumerable<IThread> _threads;
-
         public IEnumerable<IThread> Threads
         {
             get { return _threads ?? Enumerable.Empty<IThread>(); }
@@ -101,22 +94,22 @@ namespace Bugsnag.NET.Request
             return _GetGroupingHash(unwrapped.First());
         }
 
-        static string _GetContext(Exception ex)
+        static IExceptionInspector _exceptionInspector =
+            new ExceptionInspector(ex => ex?.TargetSite);
+
+        static string _GetContext(Exception ex) => _exceptionInspector.GetContext(ex);
+
+        static string _GetContext(IEnumerable<Exception> unwrapped) =>
+            _exceptionInspector.GetContext(unwrapped.FirstOrDefault());
+
+        public void AddContext(string memberName, string sourceFilePath, int sourceLineNumber)
         {
-            if (ex == null) { return string.Empty; }
-            var targetSite = ex.TargetSite;
+            Context = memberName;
 
-            return targetSite == null ? "null::null" :
-                string.Format("{0}::{1}",
-                targetSite.DeclaringType,
-                targetSite.Name);
-        }
-
-        static string _GetContext(IEnumerable<Exception> unwrapped)
-        {
-            if (!unwrapped.Any()) { return string.Empty; }
-
-            return _GetContext(unwrapped.First());
+            foreach (var error in Errors.Where(error => !error.Stacktrace.Any()))
+            {
+                error.Stacktrace = StackTraceLine.Build(memberName, sourceFilePath, sourceLineNumber);
+            }
         }
     }
 }

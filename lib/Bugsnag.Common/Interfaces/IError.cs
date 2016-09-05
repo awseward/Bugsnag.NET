@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bugsnag.NET.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
     public interface IError
@@ -16,6 +16,6 @@ namespace Bugsnag.NET.Request
         string Message { get; }
 
         [JsonProperty("stacktrace")]
-        IEnumerable<IStackTraceLine> Stacktrace { get; }
+        IEnumerable<IStackTraceLine> Stacktrace { get; set; }
     }
 }

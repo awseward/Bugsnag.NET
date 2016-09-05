@@ -1,4 +1,6 @@
-﻿namespace Bugsnag.PCL.Request
+﻿using Bugsnag.Common;
+
+namespace Bugsnag.PCL.Request
 {
     public class Device : IDevice
     {

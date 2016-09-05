@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
@@ -14,10 +15,10 @@ namespace Bugsnag.NET.Request
             Stacktrace = StackTraceLine.Build(ex);
         }
 
-        public string ErrorClass { get; private set; }
+        public string ErrorClass { get; }
 
-        public string Message { get; private set; }
+        public string Message { get; }
 
-        public IEnumerable<IStackTraceLine> Stacktrace { get; private set; }
+        public IEnumerable<IStackTraceLine> Stacktrace { get; set; }
     }
 }

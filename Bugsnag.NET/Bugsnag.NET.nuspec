@@ -12,4 +12,7 @@
     <description>A Bugsnag notifier client for .NET projects</description>
     <copyright>Copyright 2015</copyright>
   </metadata>
+  <files>
+    <file src="bin\Release\Bugsnag.Common.dll" target="lib\net45" />
+  </files>
 </package>
