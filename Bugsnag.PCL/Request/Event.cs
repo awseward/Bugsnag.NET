@@ -69,9 +69,10 @@ namespace Bugsnag.PCL.Request
             if (ex == null) { return string.Empty; }
 
             return string.Format(
-                "{0} @ {1}",
+                "{0}@{1}",
                 _GetTypeName(ex),
-                _GetMessage(ex));
+                _GetMessage(ex)
+            );
         }
 
         static string _GetMessage(Exception ex)
