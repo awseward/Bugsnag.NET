@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bugsnag.PCL.Extensions;
+using Bugsnag.Common;
+using Bugsnag.Common.Extensions;
 
 namespace Bugsnag.PCL.Request
 {
@@ -19,7 +20,7 @@ namespace Bugsnag.PCL.Request
             }
         }
 
-        internal static IEnumerable<IStackTraceLine> BuildWithContext(string memberName, string sourceFilePath, int sourceLineNumber)
+        internal static IEnumerable<IStackTraceLine> Build(string memberName, string sourceFilePath, int sourceLineNumber)
         {
             yield return new StackTraceLine
             {

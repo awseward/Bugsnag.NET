@@ -1,52 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Bugsnag.Common;
 using Bugsnag.PCL.Request;
-using System.Linq;
 
 namespace Bugsnag.PCL
 {
-    public class Bugsnag
+    public partial class Bugsnag
+    {
+        public static Bugsnag Error => new Bugsnag(Severity.Error);
+        public static Bugsnag Warning => new Bugsnag(Severity.Warning);
+        public static Bugsnag Info => new Bugsnag(Severity.Info);
+
+        public static string ApiKey { get; set; }
+        public static INotifier Notifier { get; set; } = new Notifier();
+        public static IApp App { get; set; } = new App();
+        public static IDevice Device { get; set; } = new Device();
+    }
+
+    [Obsolete("Prefer Bugsnagger.Default")]
+    public partial class Bugsnag
     {
         private Bugsnag(Severity severity)
         {
             _severity = severity;
+            Snagger = new Bugsnagger
+            {
+                ApiKey = ApiKey,
+                Notifier = Notifier,
+                App = App,
+                Device = Device,
+            };
         }
-
-        public static Bugsnag Error { get; } = new Bugsnag(Severity.Error);
-        public static Bugsnag Warning { get; } = new Bugsnag(Severity.Warning);
-        public static Bugsnag Info { get; } = new Bugsnag(Severity.Info);
-
-        public static string ApiKey { get; set; }
-
-        public static INotifier Notifier { get; set; } = new Notifier();
-
-        public static IApp App { get; set; } = new App();
 
         readonly Severity _severity;
 
-        public async Task<HttpResponseMessage> NotifyAsync(IEvent evt)
-        {
-            return await NotifyAsync(evt, true);
-        }
+        public IBugsnagger Snagger { get; }
 
-        public async Task<HttpResponseMessage> NotifyAsync(IEvent evt, bool useSSL)
-        {
-            return await NotifyAsync(new IEvent[] { evt }, useSSL);
-        }
+        public void Notify(IEvent evt) => Snagger.Notify(evt);
+        public void Notify(IEvent evt, bool useSSL) => Snagger.Notify(evt, useSSL);
+        public void Notify(IEnumerable<IEvent> events) => Snagger.Notify(events);
+        public void Notify(IEnumerable<IEvent> events, bool useSSL) => Snagger.Notify(events, useSSL);
 
-        public async Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events)
-        {
-            return await NotifyAsync(events, true);
-        }
-
-        public async Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL)
-        {
-            var notice = new Notice(ApiKey, Notifier, events);
-
-            return await BugsnagSender.SendAsync(notice, useSSL);
-        }
+        public Task<HttpResponseMessage> NotifyAsync(IEvent evt) => Snagger.NotifyAsync(evt);
+        public Task<HttpResponseMessage> NotifyAsync(IEvent evt, bool useSSL) => Snagger.NotifyAsync(evt, useSSL);
+        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events) => Snagger.NotifyAsync(events);
+        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL) => Snagger.NotifyAsync(events, useSSL);
 
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {

@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bugsnag.NET.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public interface INotifier
+    public interface IThread
     {
+        [JsonProperty("id")]
+        object Id { get; }
+
         [JsonProperty("name")]
         string Name { get; }
 
-        [JsonProperty("version")]
-        string Version { get; }
-
-        [JsonProperty("url")]
-        string Url { get; }
+        [JsonProperty("stacktrace")]
+        IEnumerable<IStackTraceLine> Stacktrace { get; }
     }
 }

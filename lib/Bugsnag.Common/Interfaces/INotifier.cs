@@ -1,6 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Bugsnag.PCL.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
     public interface INotifier

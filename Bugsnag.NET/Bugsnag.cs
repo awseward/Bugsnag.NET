@@ -1,90 +1,12 @@
-﻿using Bugsnag.NET.Request;
-using Bugsnag.NET.Extensions;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
-using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Bugsnag.Common;
+using Bugsnag.NET.Request;
 
 namespace Bugsnag.NET
 {
-    public interface IBugsnagger
-    {
-        string ApiKey { get; set; }
-
-        INotifier Notifier { get; set; }
-        IApp App { get; set; }
-        IDevice Device { get; set; }
-
-        void Error(Exception ex, IUser user, object metadata);
-        void Warning(Exception ex, IUser user, object metadata);
-        void Info(Exception ex, IUser user, object metadata);
-
-        void Notify(IEvent @event);
-        void Notify(IEvent @event, bool useHttps);
-        void Notify(IEnumerable<IEvent> events);
-        void Notify(IEnumerable<IEvent> events, bool useHttps);
-    }
-
-    public partial class Bugsnagger : IBugsnagger
-    {
-        public static IBugsnagger Default { get; } = new Bugsnagger();
-    }
-
-    public partial class Bugsnagger : IBugsnagger
-    {
-        public string ApiKey { get; set; }
-
-        public IApp App { get; set; } = new App();
-        public IDevice Device { get; set; } = new Device();
-        public INotifier Notifier { get; set; } = new Notifier();
-
-        public void Error(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Error, ex, user, metadata);
-
-            Notify(@event);
-        }
-
-        public void Warning(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Warning, ex, user, metadata);
-
-            Notify(@event);
-        }
-
-        public void Info(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Info, ex, user, metadata);
-
-            Notify(@event);
-        }
-
-        public void Notify(IEvent @event)
-        {
-            Notify(@event, true);
-        }
-
-        public void Notify(IEvent @event, bool useHttps)
-        {
-            Notify(new List<IEvent> { @event }, useHttps);
-        }
-
-        public void Notify(IEnumerable<IEvent> events)
-        {
-            Notify(events, true);
-        }
-
-        public void Notify(IEnumerable<IEvent> events, bool useHttps)
-        {
-            var notice = new Notice(ApiKey, Notifier, events);
-
-            BugsnagSender.Send(notice, useHttps);
-        }
-    }
-
     public partial class Bugsnag
     {
         public static Bugsnag Error => new Bugsnag(Severity.Error);
@@ -97,6 +19,7 @@ namespace Bugsnag.NET
         public static IDevice Device { get; set; } = new Device();
     }
 
+    [Obsolete("Prefer Bugsnagger.Default")]
     public partial class Bugsnag
     {
         private Bugsnag(Severity severity)
@@ -119,6 +42,11 @@ namespace Bugsnag.NET
         public void Notify(IEvent evt, bool useSSL) => Snagger.Notify(evt, useSSL);
         public void Notify(IEnumerable<IEvent> events) => Snagger.Notify(events);
         public void Notify(IEnumerable<IEvent> events, bool useSSL) => Snagger.Notify(events, useSSL);
+
+        public Task<HttpResponseMessage> NotifyAsync(IEvent evt) => Snagger.NotifyAsync(evt);
+        public Task<HttpResponseMessage> NotifyAsync(IEvent evt, bool useSSL) => Snagger.NotifyAsync(evt, useSSL);
+        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events) => Snagger.NotifyAsync(events);
+        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL) => Snagger.NotifyAsync(events, useSSL);
 
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {

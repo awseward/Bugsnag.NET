@@ -31,8 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.core">
       <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.core.dll</HintPath>
@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,8 +67,15 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ExceptionExtensionTests.cs" />
+    <Compile Include="Integration\IntegrationTests.PCL.cs" />
+    <Compile Include="Integration\Utils\InstanceApproachApp.cs" />
+    <Compile Include="Integration\Utils\InstanceApproachAsyncApp.cs" />
+    <Compile Include="Integration\Utils\ITestApp.cs" />
+    <Compile Include="Integration\Utils\StaticApproachApp.cs" />
+    <Compile Include="Integration\Utils\StaticApproachAsyncApp.cs" />
+    <Compile Include="Integration\Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IntegrationTests.cs" />
+    <Compile Include="Integration\IntegrationTests.NET.cs" />
     <Compile Include="Request\NoticeBuilder.cs" />
     <Compile Include="Request\NoticeTests.cs" />
     <Compile Include="Request\UserTests.cs" />
@@ -82,6 +90,14 @@
     <ProjectReference Include="..\Bugsnag.NET\Bugsnag.NET.csproj">
       <Project>{c1de70f2-bc01-4995-b262-2f3fb5104ace}</Project>
       <Name>Bugsnag.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugsnag.PCL\Bugsnag.PCL.csproj">
+      <Project>{75ad67ec-189f-4df7-80a6-5dabc5b77a64}</Project>
+      <Name>Bugsnag.PCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Bugsnag.Common\Bugsnag.Common.csproj">
+      <Project>{75bdcdb7-3fc4-4dd2-b60c-e1b5344f1112}</Project>
+      <Name>Bugsnag.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

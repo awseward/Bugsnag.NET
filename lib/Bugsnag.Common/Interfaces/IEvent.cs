@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Bugsnag.NET.Request
+namespace Bugsnag.Common
 {
     [JsonObject(MemberSerialization.OptIn)]
     public interface IEvent
@@ -38,5 +38,8 @@ namespace Bugsnag.NET.Request
 
         [JsonProperty("metaData")]
         object MetaData { get; }
+
+        [Obsolete("Avoid using this if possible")]
+        void AddContext(string memberName, string sourceFilePath, int sourceLineNumber);
     }
 }

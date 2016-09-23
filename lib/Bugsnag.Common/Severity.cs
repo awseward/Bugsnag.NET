@@ -1,6 +1,6 @@
-﻿namespace Bugsnag.PCL.Request
+﻿namespace Bugsnag.Common
 {
-    abstract class Severity
+    public abstract class Severity
     {
         private Severity() { }
 

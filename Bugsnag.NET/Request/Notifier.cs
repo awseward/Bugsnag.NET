@@ -4,27 +4,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
     public class Notifier : INotifier
     {
-        string _name = "Bugsnag.NET";
+        public string Name { get; } = "Bugsnag.NET";
 
-        public string Name { get { return _name; } }
-
-        string _version = new Func<string>(() =>
+        public string Version { get; } = new Func<string>(() =>
         {
             var assembly = typeof(Notifier).Assembly;
             var location = assembly.Location;
             return FileVersionInfo.GetVersionInfo(location).ProductVersion;
         }).Invoke();
 
-        public string Version { get { return _version; } }
-
-
-        string _url = "https://github.com/awseward/Bugsnag.NET";
-
-        public string Url { get { return _url; } }
+        public string Url { get; } = "https://github.com/awseward/Bugsnag.NET";
     }
 }

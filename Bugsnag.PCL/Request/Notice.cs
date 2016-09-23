@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Bugsnag.Common;
 
 namespace Bugsnag.PCL.Request
 {
@@ -9,7 +10,7 @@ namespace Bugsnag.PCL.Request
         {
             ApiKey = apiKey;
             Notifier = notifier;
-            Events = events;
+            Events = events ?? Enumerable.Empty<Event>();
         }
 
         public Notice(string apiKey, INotifier notifier, IEvent evt)
@@ -19,12 +20,6 @@ namespace Bugsnag.PCL.Request
 
         public INotifier Notifier { get; private set; }
 
-        IEnumerable<IEvent> _events;
-
-        public IEnumerable<IEvent> Events
-        {
-            get { return _events ?? Enumerable.Empty<Event>(); }
-            private set { _events = value; }
-        }
+        public IEnumerable<IEvent> Events { get; } = Enumerable.Empty<Event>();
     }
 }
