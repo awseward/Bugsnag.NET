@@ -71,10 +71,10 @@ namespace Bugsnag.NET.Request
             if (ex == null) { return string.Empty; }
 
             return string.Format(
-                "{0} @ {1} : {2}",
+                "{0}@{1}",
                 _GetTypeName(ex),
-                _GetContext(ex),
-                _GetMessage(ex));
+                _GetContext(ex)
+            );
         }
 
         static string _GetMessage(Exception ex)
