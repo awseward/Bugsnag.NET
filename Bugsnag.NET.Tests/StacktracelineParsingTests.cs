@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bugsnag.Common.Extensions;
 using NUnit.Framework;
 
 namespace Bugsnag.NET.Tests
@@ -26,12 +27,18 @@ namespace Bugsnag.NET.Tests
         readonly string _frameworkLine = @"   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)";
         readonly string _asyncAwaitPreviousLocationLine = @"--- End of stack trace from previous location where exception was thrown ---";
 
+        readonly string _parseFailedMethodName = "[method]";
+        readonly string _parseFailedFile = "[file]";
+        readonly int _parseFailedLineNumber = -1;
+
         [Test]
         public void CanParseSourceLineWithFileInfo()
         {
             var line = _sourceLine;
 
-            Assert.Fail();
+            Assert.AreNotEqual(_parseFailedMethodName, line.ParseMethodName());
+            Assert.AreNotEqual(_parseFailedFile, line.ParseFile());
+            Assert.AreNotEqual(_parseFailedLineNumber, line.ParseLineNumber());
         }
 
         [Test]
