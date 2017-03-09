@@ -46,7 +46,9 @@ namespace Bugsnag.NET.Tests
         {
             var line = _frameworkLine;
 
-            Assert.Fail();
+            Assert.AreNotEqual(_parseFailedMethodName, line.ParseMethodName());
+            Assert.AreEqual(_parseFailedFile, line.ParseFile());
+            Assert.AreEqual(_parseFailedLineNumber, line.ParseLineNumber());
         }
 
         [Test]
