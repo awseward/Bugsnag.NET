@@ -56,7 +56,13 @@ namespace Bugsnag.NET.Tests
         {
             var line = _asyncAwaitPreviousLocationLine;
 
+            // NOTE: This one stands out a bit. If we fail to parse the method name,
+            // which we're considering the "bare minimum", we just return the whole
+            // line as the method name. It feels a bit driven by the way Bugsnag
+            // expects payloads, but this is a Bugsnag lib, so this probably doesn't
+            // matter all that much...
             Assert.AreEqual(_asyncAwaitPreviousLocationLine, line.ParseMethodName());
+
             Assert.AreEqual(_parseFailedFile, line.ParseFile());
             Assert.AreEqual(_parseFailedLineNumber, line.ParseLineNumber());
         }
