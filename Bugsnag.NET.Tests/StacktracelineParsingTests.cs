@@ -56,7 +56,9 @@ namespace Bugsnag.NET.Tests
         {
             var line = _asyncAwaitPreviousLocationLine;
 
-            Assert.Fail();
+            Assert.AreEqual(_asyncAwaitPreviousLocationLine, line.ParseMethodName());
+            Assert.AreEqual(_parseFailedFile, line.ParseFile());
+            Assert.AreEqual(_parseFailedLineNumber, line.ParseLineNumber());
         }
     }
 }
