@@ -48,7 +48,7 @@ namespace Bugsnag.Common.Extensions
         {
             // to extract the full method name (with namespace)
             var match = Regex.Match(line, "at ([^)]+[)])");
-            if (match.Groups.Count < 2) { return "[method]"; }
+            if (match.Groups.Count < 2) { return line; }
 
             return match.Groups[1].Value;
         }
