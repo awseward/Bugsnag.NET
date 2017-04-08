@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Bugsnag.Common
 {
@@ -12,10 +12,7 @@ namespace Bugsnag.Common
     {
         static Uri _uri = new Uri("http://notify.bugsnag.com");
         static Uri _sslUri = new Uri("https://notify.bugsnag.com");
-        static JsonSerializerSettings _settings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        };
+        static JsonSerializerSettings _settings = new JsonSerializerSettings { };
         static HttpClient _HttpClient { get; } = new HttpClient();
 
         public void Send(INotice notice) => Send(notice, true);
