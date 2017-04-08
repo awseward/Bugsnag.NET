@@ -20,10 +20,7 @@ namespace Bugsnag.Common
 
         public void Send(INotice notice) => Send(notice, true);
 
-        public void Send(INotice notice, bool useSSL)
-        {
-            var _ = SendAsync(notice, useSSL).Result;
-        }
+        public void Send(INotice notice, bool useSSL) => SendAsync(notice, useSSL).Wait();
 
         public Task<HttpResponseMessage> SendAsync(INotice notice) => SendAsync(notice, true);
 
