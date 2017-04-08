@@ -107,17 +107,24 @@ namespace Bugsnag.Tests.Integration
             static void _OnUnhandledException(Exception ex)
             {
                 var client = BsPCL.Bugsnag.Error;
-                var @event = client.GetEvent(ex, null, null);
+                var @event = client.GetEvent(ex, null, _GetMetadata());
 
                 client.Notify(@event);
             }
             static Task _OnUnhandledExceptionAsync(Exception ex)
             {
                 var client = BsPCL.Bugsnag.Error;
-                var @event = client.GetEvent(ex, null, null);
+                var @event = client.GetEvent(ex, null, _GetMetadata());
 
                 return client.NotifyAsync(@event);
             }
+
+            static object _GetMetadata() =>
+                new
+                {
+                    Foo = "bar",
+                    Baz = (object)null,
+                };
         }
     }
 }

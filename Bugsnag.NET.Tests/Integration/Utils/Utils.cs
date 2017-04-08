@@ -81,7 +81,7 @@ namespace Bugsnag.Tests.Integration
 
         public ITestApp TestApp(Func<IBugsnagger, Action<Exception, IUser, object>> getNotify)
         {
-            return TestApp((snagger, ex) => getNotify(snagger)(ex, null, null));
+            return TestApp((snagger, ex) => getNotify(snagger)(ex, null, _GetMetadata()));
         }
 
         public IAsyncTestApp AsyncTestApp(Func<IBugsnagger, Exception, Task> notifyAsync)
@@ -91,7 +91,14 @@ namespace Bugsnag.Tests.Integration
 
         public IAsyncTestApp AsyncTestApp(Func<IBugsnagger, Func<Exception, IUser, object, Task>> getNotify)
         {
-            return AsyncTestApp((snagger, ex) => getNotify(snagger)(ex, null, null));
+            return AsyncTestApp((snagger, ex) => getNotify(snagger)(ex, null, _GetMetadata()));
         }
+
+        object _GetMetadata() =>
+            new
+            {
+                Foo = "bar",
+                Baz = (object) null,
+            };
     }
 }
