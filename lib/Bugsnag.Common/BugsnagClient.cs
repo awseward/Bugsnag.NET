@@ -16,6 +16,7 @@ namespace Bugsnag.Common
         {
             NullValueHandling = NullValueHandling.Ignore
         };
+        static HttpClient _HttpClient { get; } = new HttpClient();
 
         public void Send(INotice notice) => Send(notice, true);
 
@@ -32,7 +33,7 @@ namespace Bugsnag.Common
             var json = JsonConvert.SerializeObject(notice, _settings);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return new HttpClient().PostAsync(uri, content);
+            return _HttpClient.PostAsync(uri, content);
         }
     }
 }
