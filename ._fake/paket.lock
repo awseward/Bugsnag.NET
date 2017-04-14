@@ -1,6 +1,5 @@
 NUGET
   remote: https://www.nuget.org/api/v2
-  specs:
-    FAKE (4.27)
-    FSharp.FakeTargets (0.8)
+    FAKE (4.58.6)
+    FSharp.FakeTargets (0.10.1)
     NUnit.Runners (2.6.4)
