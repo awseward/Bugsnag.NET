@@ -11,8 +11,8 @@ namespace Bugsnag.NET.Tests.Request
 {
     class UserTests
     {
-        static Guid _guidId = Guid.NewGuid();
-        static string _stringId = System.IO.Path.GetRandomFileName().Replace(".", "");
+        static Guid _guidId = Guid.Parse("72eae7d5-b3c9-43fd-8fa6-5dae60d509a7");
+        static string _stringId = "q5OKLQpuYNmtiZ5wx/Aa+JkozBKaSBKI9ImYRG+1==";
         static int _intId = 8675309;
         static object[] _commonIds = new object[] { _guidId, _stringId, _intId };
         static string _name = "Robert Paulson";
@@ -21,7 +21,6 @@ namespace Bugsnag.NET.Tests.Request
         public static object[] CommonIds { get { return _commonIds; } }
 
         [TestCaseSource("CommonIds")]
-        [Ignore("Possible bug in NUnit (`Test adapter sent back a result for an unknown test case.`)")]
         public void IdIsCorrect(object id)
         {
             var user = _BuildUser(id, _name, _email);
