@@ -60,5 +60,8 @@ namespace Bugsnag.Common.Extensions
 
             return Convert.ToInt32(match.Groups[1].Value);
         }
+
+        public static IDictionary<string, object> ReadData(this Exception ex) =>
+            ex?.Data?.ToGeneric();
     }
 }

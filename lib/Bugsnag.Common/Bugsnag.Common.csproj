@@ -38,6 +38,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BugsnagClient.cs" />
+    <Compile Include="Extensions\NongenericDictionaryExtensions.cs" />
     <Compile Include="ExceptionInspector.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Interfaces\IApp.cs" />

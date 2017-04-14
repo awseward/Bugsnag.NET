@@ -58,5 +58,32 @@ namespace Bugsnag.NET.Tests
             Assert.AreEqual(topLevelException, exceptions.FirstOrDefault());
             Assert.AreEqual(innerException, exceptions.LastOrDefault());
         }
+
+        [Test]
+        public void ReadData_reads_entries_with_string_keys()
+        {
+            var exception = new Exception("");
+            var key = "key";
+            var value = Guid.NewGuid();
+            exception.Data.Add(key, value);
+
+            var singleKvp = exception.ReadData().Single();
+
+            Assert.AreEqual(singleKvp.Key, key);
+            Assert.AreEqual(singleKvp.Value, value);
+        }
+
+        [Test]
+        public void ReadData_skips_entries_with_nonstring_keys()
+        {
+            var exception = new Exception("Unimportant message");
+            var key = 123L;
+            var value = Guid.NewGuid();
+            exception.Data.Add(key, value);
+
+            var data = exception.ReadData();
+
+            Assert.AreEqual(0, data.Count);
+        }
     }
 }
