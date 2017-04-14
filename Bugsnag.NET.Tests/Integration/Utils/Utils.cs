@@ -41,10 +41,14 @@ namespace Bugsnag.Tests.Integration
             Inconclusive();
         }
 
-
         public static void TriggerError(string testInfo)
         {
-            throw new ApplicationException($"Error triggered by {testInfo}");
+            new System.Net.Http.HttpClient().GetAsync("https://thisdoesnot.exist.com:5678/youbetitdoesnt").Wait();
+            var ex = new ApplicationException($"Error triggered by {testInfo}");
+            ex.Data.Add("hello", "world");
+            ex.Data.Add("uri", new Uri("https://google.com/robots.txt"));
+            //ex.Data.Add("__foo__", new { Woah = "You bet" });
+            throw ex;
         }
 
         public static string ReadApiKey()

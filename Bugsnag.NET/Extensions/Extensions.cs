@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Bugsnag.Common;
+using Bugsnag.Common.Extensions;
 using Bugsnag.NET.Request;
+using System.Dynamic;
 
 namespace Bugsnag.NET
 {
@@ -23,7 +25,25 @@ namespace Bugsnag.NET
                 Device = snagger.Device,
                 User = user,
                 Severity = severity.ToString(),
-                MetaData = metadata,
+                MetaData = new Dictionary<string, object>
+                {
+                    { "metadata", metadata },
+                    { $"0 {ex.GetType().Name}", ex.ReadData() },
+                }
+                // MetaData = new
+                // {
+                //     metadata,
+                //     NestNestNest = new
+                //     {
+                //         metadata,
+                //         exceptionData = ex.ReadData(),
+                //         Device = new
+                //         {
+                //             _____________hello_________ = "you can totally sneak things in here even though it's not a \"custom\" tab",
+                //         },
+                //         App = "Wat",
+                //     }
+                // },
             };
         }
 

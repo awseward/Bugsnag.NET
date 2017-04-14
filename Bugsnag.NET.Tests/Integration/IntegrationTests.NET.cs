@@ -11,7 +11,6 @@ using BsNET = Bugsnag.NET;
 
 namespace Bugsnag.Tests.Integration
 {
-    [Ignore]
     public class IntegrationTests_NET
     {
         [Test]
