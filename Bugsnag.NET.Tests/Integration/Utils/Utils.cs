@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Bugsnag.Common;
+using System.Threading;
 
 namespace Bugsnag.Tests.Integration
 {
@@ -44,6 +45,9 @@ namespace Bugsnag.Tests.Integration
 
         public static void TriggerError(string testInfo)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-fr");
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("fr-fr");
+            System.Reflection.Assembly.LoadFrom("8glzsuvzisdyfoz8s7fdglaj,hvkjh");
             throw new ApplicationException($"Error triggered by {testInfo}");
         }
 

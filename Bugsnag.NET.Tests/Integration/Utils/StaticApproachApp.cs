@@ -15,6 +15,8 @@ namespace Bugsnag.Tests.Integration
             Action setApp,
             Action<Exception> onUnhandledException)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-fr");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("fr-fr");
             _setApiKey = setApiKey;
             _setApp = setApp;
             _onUnhandledException = onUnhandledException;
