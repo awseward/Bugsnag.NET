@@ -10,19 +10,24 @@ namespace Bugsnag.NET.Request
 {
     public class StackTraceLine : IStackTraceLine
     {
-        public static IEnumerable<IStackTraceLine> Build(Exception ex)
+        public static IEnumerable<IStackTraceLine> Build(Exception ex) => Build(ex, x => x);
+        public static IEnumerable<IStackTraceLine> Build(Exception ex, Func<IStackTraceLine, IStackTraceLine> transformStackTraceLine)
         {
             foreach (var line in ex.ToLines())
             {
-                yield return new StackTraceLine
-                {
-                    File = line.ParseFile(),
-                    LineNumber = line.ParseLineNumber(),
-                    Method = line.ParseMethodName()
-                };
+                yield return transformStackTraceLine(
+                    new StackTraceLine
+                    {
+                        File = line.ParseFile(),
+                        LineNumber = line.ParseLineNumber(),
+                        Method = line.ParseMethodName(),
+                        InProject = true,
+                    }
+                );
             }
         }
 
+        [Obsolete]
         internal static IEnumerable<IStackTraceLine> Build(string memberName, string sourceFilePath, int sourceLineNumber)
         {
             yield return new StackTraceLine

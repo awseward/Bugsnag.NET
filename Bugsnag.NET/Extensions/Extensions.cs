@@ -17,7 +17,7 @@ namespace Bugsnag.NET
             IUser user,
             object metadata)
         {
-            return new Event(ex)
+            return new Event(ex, snagger.TransformStacktraceLine)
             {
                 App = snagger.App,
                 Device = snagger.Device,
@@ -34,7 +34,7 @@ namespace Bugsnag.NET
             IUser user,
             object metadata)
         {
-            return new Event(unwrapped)
+            return new Event(unwrapped, snagger.TransformStacktraceLine)
             {
                 App = snagger.App,
                 Device = snagger.Device,
