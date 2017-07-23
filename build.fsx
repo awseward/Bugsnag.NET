@@ -5,20 +5,20 @@ open NuGetHelper
 open RestorePackageHelper
 open Bugsnag.NET.Fake.Config
 
-let private _overrideConfig (parameters: datNET.Targets.ConfigParams) =
-  { parameters with
+datNET.Targets.initialize (fun p ->
+  { p with
       AccessKey = Nuget.ApiKey
       AssemblyInfoFilePaths = Build.AssemblyInfoFilePaths
       Authors = Release.Authors
       Description = Release.Description
       OutputPath = Release.OutputPath
       Project = Release.Project
+      ProjectFilePath = Some "Bugsnag.NET/Bugsnag.NET.csproj"
       Publish = true
       TestAssemblies = Build.TestAssemblies
       WorkingDir = Release.WorkingDir
   }
-
-datNET.Targets.initialize _overrideConfig
+)
 
 Target "RestorePackages" (fun _ ->
   Source.SolutionFile
@@ -32,7 +32,7 @@ Target "RestorePackages" (fun _ ->
 
 "MSBuild" <== [ "Clean"; "RestorePackages" ]
 "Test"    <== [ "MSBuild" ]
-"Package" <== [ "MSBuild" ]
-"Publish" <== [ "Package" ]
+"Package:Project" <== [ "MSBuild" ]
+"Publish" <== [ "Package:Project" ]
 
 RunTargetOrDefault "MSBuild"
