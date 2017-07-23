@@ -28,7 +28,7 @@ namespace Bugsnag.NET.Tests
         readonly string _asyncAwaitPreviousLocationLine = @"--- End of stack trace from previous location where exception was thrown ---";
 
         readonly string _parseFailedMethodName = "[method]";
-        readonly string _parseFailedFile = "[file]";
+        readonly string _parseFailedFile = CommonExtensions.FileParseFailureDefaultValue;
         readonly int _parseFailedLineNumber = -1;
 
         [Test]
