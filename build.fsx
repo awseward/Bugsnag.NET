@@ -11,12 +11,12 @@ datNET.Targets.initialize (fun p ->
       AssemblyInfoFilePaths = ["SharedAssemblyInfo.cs"]
       Authors               = ["Andrew Seward"; "Mathew Glodack"]
       Description           = "A Bugsnag notifier client for .NET projects"
-      OutputPath            = "bin"
+      OutputPath            = "."
       Project               = "Bugsnag.NET"
       ProjectFilePath       = Some "Bugsnag.NET/Bugsnag.NET.csproj"
       Publish               = true
       TestAssemblies        = !! "Bugsnag.NET.Tests/**/bin/**/*.Tests.dll"
-      WorkingDir            = "bin" // NOTE: This seems a bit off for the label's name of "WorkingDir"
+      WorkingDir            = "."
   }
 )
 
