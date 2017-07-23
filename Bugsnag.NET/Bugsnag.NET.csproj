@@ -64,6 +64,7 @@
     <Compile Include="Request\StackTraceLine.cs" />
     <Compile Include="Request\Thread.cs" />
     <Compile Include="Request\User.cs" />
+    <Compile Include="StackTraceLineHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\lib\Bugsnag.Common\Bugsnag.Common.csproj">
