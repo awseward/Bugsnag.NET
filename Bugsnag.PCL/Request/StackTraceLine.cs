@@ -32,7 +32,7 @@ namespace Bugsnag.PCL.Request
 
         public string File { get; private set; }
 
-        public int LineNumber { get; private set; }
+        public int? LineNumber { get; private set; }
 
         public int? ColumnNumber { get; private set; }
 

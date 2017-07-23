@@ -13,7 +13,7 @@ namespace Bugsnag.NET
     {
         static string _DefaultFileValue => CommonExtensions.FileParseFailureDefaultValue;
 
-        public static bool HasSuccessfullyParsedFile(this IStackTraceLine line) => line?.File != _DefaultFileValue;
+        public static bool HasSuccessfullyParsedFile(this IStackTraceLine line) => !string.IsNullOrWhiteSpace(line?.File);
 
         public static bool IsFromNamespaces(
             this IStackTraceLine line,
@@ -22,7 +22,7 @@ namespace Bugsnag.NET
         public static string TryGetTrimmedFile(this IStackTraceLine line, Regex regex) => line.TryGetTrimmedFile(regex, str => str);
         public static string TryGetTrimmedFile(this IStackTraceLine line, Regex regex, Func<string, string> additionalTransformOnSuccess)
         {
-            var fileName = line?.File ?? _DefaultFileValue; // NOTE: Not sure if a better thing here to coerce or just blow up
+            var fileName = line?.File ?? _DefaultFileValue;
             var match = regex.Match(fileName);
 
             return match.Success

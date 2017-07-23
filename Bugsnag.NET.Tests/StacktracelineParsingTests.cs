@@ -29,7 +29,7 @@ namespace Bugsnag.NET.Tests
 
         readonly string _parseFailedMethodName = "[method]";
         readonly string _parseFailedFile = CommonExtensions.FileParseFailureDefaultValue;
-        readonly int _parseFailedLineNumber = -1;
+        readonly int? _parseFailedLineNumber = null;
 
         [Test]
         public void CanParseSourceLineWithFileInfo()

@@ -39,7 +39,7 @@ namespace Bugsnag.NET.Request
         }
 
         public string File { get; set; }
-        public int LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         public int? ColumnNumber { get; set; }
         public string Method { get; set; }
         public bool InProject { get; set; }
