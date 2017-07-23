@@ -13,7 +13,7 @@ namespace Bugsnag.Common
         string File { get; }
 
         [JsonProperty("lineNumber")]
-        int LineNumber { get; }
+        int? LineNumber { get; }
 
         [JsonProperty("columnNumber")]
         int? ColumnNumber { get; }
@@ -30,7 +30,7 @@ namespace Bugsnag.Common
     public interface IMutableStackTraceLine : IStackTraceLine
     {
         new string File { get; set; }
-        new int LineNumber { get; set; }
+        new int? LineNumber { get; set; }
         new int? ColumnNumber { get; set; }
         new string Method { get; set; }
         new bool InProject { get; set; }

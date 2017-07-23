@@ -36,7 +36,7 @@ namespace Bugsnag.Common.Extensions
             );
         }
 
-        public static string FileParseFailureDefaultValue = "[file]";
+        public static string FileParseFailureDefaultValue = "";
 
         public static string ParseFile(this string line)
         {
@@ -55,10 +55,10 @@ namespace Bugsnag.Common.Extensions
             return match.Groups[1].Value;
         }
 
-        public static int ParseLineNumber(this string line)
+        public static int? ParseLineNumber(this string line)
         {
             var match = Regex.Match(line, ":line ([0-9]+)");
-            if (match.Groups.Count < 2) { return -1; }
+            if (match.Groups.Count < 2) { return null; }
 
             return Convert.ToInt32(match.Groups[1].Value);
         }
