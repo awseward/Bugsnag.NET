@@ -36,10 +36,12 @@ namespace Bugsnag.Common.Extensions
             );
         }
 
+        public static string FileParseFailureDefaultValue = "[file]";
+
         public static string ParseFile(this string line)
         {
             var match = Regex.Match(line, "in (.+):line");
-            if (match.Groups.Count < 2) { return "[file]"; }
+            if (match.Groups.Count < 2) { return FileParseFailureDefaultValue; }
 
             return match.Groups[1].Value;
         }
