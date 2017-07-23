@@ -8,11 +8,12 @@ namespace Bugsnag.NET.Request
 {
     public class Error : IError
     {
-        public Error(Exception ex)
+        public Error(Exception ex) : this(ex, x => x) { }
+        public Error(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             ErrorClass = ex.GetType().Name;
             Message = ex.Message;
-            Stacktrace = StackTraceLine.Build(ex);
+            Stacktrace = StackTraceLine.Build(ex, transformStacktraceLine);
         }
 
         public string ErrorClass { get; }

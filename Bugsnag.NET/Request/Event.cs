@@ -10,16 +10,18 @@ namespace Bugsnag.NET.Request
 {
     public class Event : IEvent
     {
-        public Event(Exception ex)
+        public Event(Exception ex) : this(ex, x => x) { }
+        public Event(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
-            Errors = _GetErrors(ex);
+            Errors = _GetErrors(ex, transformStacktraceLine);
             GroupingHash = _GetGroupingHash(ex);
             Context = _GetContext(ex);
         }
 
-        public Event(IEnumerable<Exception> unwrapped)
+        public Event(IEnumerable<Exception> unwrapped) : this(unwrapped, x => x) { }
+        public Event(IEnumerable<Exception> unwrapped, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
-            Errors = _GetErrors(unwrapped);
+            Errors = _GetErrors(unwrapped, transformStacktraceLine);
             GroupingHash = _GetGroupingHash(unwrapped);
             Context = _GetContext(unwrapped);
         }
@@ -54,16 +56,16 @@ namespace Bugsnag.NET.Request
 
         public object MetaData { get; set; }
 
-        static IEnumerable<IError> _GetErrors(Exception ex)
+        static IEnumerable<IError> _GetErrors(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             if (ex == null) { return Enumerable.Empty<IError>(); }
 
-            return _GetErrors(ex.Unwrap());
+            return _GetErrors(ex.Unwrap(), transformStacktraceLine);
         }
 
-        static IEnumerable<IError> _GetErrors(IEnumerable<Exception> unwrapped)
+        static IEnumerable<IError> _GetErrors(IEnumerable<Exception> unwrapped, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
-            return unwrapped.Select(ex => new Error(ex));
+            return unwrapped.Select(ex => new Error(ex, transformStacktraceLine));
         }
 
         static string _GetGroupingHash(Exception ex)
@@ -102,6 +104,7 @@ namespace Bugsnag.NET.Request
         static string _GetContext(IEnumerable<Exception> unwrapped) =>
             _exceptionInspector.GetContext(unwrapped.FirstOrDefault());
 
+        [Obsolete]
         public void AddContext(string memberName, string sourceFilePath, int sourceLineNumber)
         {
             Context = memberName;

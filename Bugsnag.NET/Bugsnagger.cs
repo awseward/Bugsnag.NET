@@ -18,6 +18,7 @@ namespace Bugsnag.NET
         public IApp App { get; set; } = new App();
         public IDevice Device { get; set; } = new Device();
         public INotifier Notifier { get; set; } = new Notifier();
+        public Func<IMutableStackTraceLine, IStackTraceLine> FinalizeStacktraceLine { get; set; } = x => x;
 
         [Obsolete("Has not been verified to work yet")]
         public Task<HttpResponseMessage> ErrorAsync(Exception ex, IUser user, object metadata)
