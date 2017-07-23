@@ -15,6 +15,7 @@ datNET.Targets.initialize (fun p ->
       Project = Release.Project
       ProjectFilePath = Some "Bugsnag.NET/Bugsnag.NET.csproj"
       Publish = true
+      PublishUrl = "https://api.nuget.org/v3/index.json"
       TestAssemblies = Build.TestAssemblies
       WorkingDir = Release.WorkingDir
   }
