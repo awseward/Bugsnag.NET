@@ -15,7 +15,7 @@ namespace Bugsnag.Common
         IApp App { get; set; }
         IDevice Device { get; set; }
 
-        Func<IStackTraceLine, IStackTraceLine> TransformStacktraceLine { get; set; }
+        Func<IMutableStackTraceLine, IStackTraceLine> FinalizeStacktraceLine { get; set; }
 
         void Error(Exception ex, IUser user, object metadata);
         void Warning(Exception ex, IUser user, object metadata);

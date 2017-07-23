@@ -8,10 +8,10 @@ using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
-    public class StackTraceLine : IStackTraceLine
+    public class StackTraceLine : IMutableStackTraceLine
     {
         public static IEnumerable<IStackTraceLine> Build(Exception ex) => Build(ex, x => x);
-        public static IEnumerable<IStackTraceLine> Build(Exception ex, Func<IStackTraceLine, IStackTraceLine> transformStackTraceLine)
+        public static IEnumerable<IStackTraceLine> Build(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStackTraceLine)
         {
             foreach (var line in ex.ToLines())
             {
@@ -38,14 +38,10 @@ namespace Bugsnag.NET.Request
             };
         }
 
-        public string File { get; private set; }
-
-        public int LineNumber { get; private set; }
-
-        public int? ColumnNumber { get; private set; }
-
-        public string Method { get; private set; }
-
-        public bool InProject { get; private set; }
+        public string File { get; set; }
+        public int LineNumber { get; set; }
+        public int? ColumnNumber { get; set; }
+        public string Method { get; set; }
+        public bool InProject { get; set; }
     }
 }

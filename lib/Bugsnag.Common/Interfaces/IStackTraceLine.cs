@@ -26,4 +26,15 @@ namespace Bugsnag.Common
 
         // TODO: Code
     }
+
+    public interface IMutableStackTraceLine : IStackTraceLine
+    {
+        new string File { get; set; }
+        new int LineNumber { get; set; }
+        new int? ColumnNumber { get; set; }
+        new string Method { get; set; }
+        new bool InProject { get; set; }
+
+        // TODO: Code
+    }
 }

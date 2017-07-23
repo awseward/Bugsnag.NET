@@ -50,7 +50,7 @@ namespace Bugsnag.NET
 
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {
-            return new Event(ex, Snagger.TransformStacktraceLine)
+            return new Event(ex, Snagger.FinalizeStacktraceLine)
             {
                 App = App,
                 Device = Device,
@@ -62,7 +62,7 @@ namespace Bugsnag.NET
 
         public IEvent GetEvent(IEnumerable<Exception> unwrapped, IUser user, object metaData)
         {
-            return new Event(unwrapped, Snagger.TransformStacktraceLine)
+            return new Event(unwrapped, Snagger.FinalizeStacktraceLine)
             {
                 App = App,
                 Device = Device,

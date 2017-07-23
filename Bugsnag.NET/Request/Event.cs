@@ -11,7 +11,7 @@ namespace Bugsnag.NET.Request
     public class Event : IEvent
     {
         public Event(Exception ex) : this(ex, x => x) { }
-        public Event(Exception ex, Func<IStackTraceLine, IStackTraceLine> transformStacktraceLine)
+        public Event(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             Errors = _GetErrors(ex, transformStacktraceLine);
             GroupingHash = _GetGroupingHash(ex);
@@ -19,7 +19,7 @@ namespace Bugsnag.NET.Request
         }
 
         public Event(IEnumerable<Exception> unwrapped) : this(unwrapped, x => x) { }
-        public Event(IEnumerable<Exception> unwrapped, Func<IStackTraceLine, IStackTraceLine> transformStacktraceLine)
+        public Event(IEnumerable<Exception> unwrapped, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             Errors = _GetErrors(unwrapped, transformStacktraceLine);
             GroupingHash = _GetGroupingHash(unwrapped);
@@ -56,14 +56,14 @@ namespace Bugsnag.NET.Request
 
         public object MetaData { get; set; }
 
-        static IEnumerable<IError> _GetErrors(Exception ex, Func<IStackTraceLine, IStackTraceLine> transformStacktraceLine)
+        static IEnumerable<IError> _GetErrors(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             if (ex == null) { return Enumerable.Empty<IError>(); }
 
             return _GetErrors(ex.Unwrap(), transformStacktraceLine);
         }
 
-        static IEnumerable<IError> _GetErrors(IEnumerable<Exception> unwrapped, Func<IStackTraceLine, IStackTraceLine> transformStacktraceLine)
+        static IEnumerable<IError> _GetErrors(IEnumerable<Exception> unwrapped, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
         {
             return unwrapped.Select(ex => new Error(ex, transformStacktraceLine));
         }
