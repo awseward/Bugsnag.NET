@@ -24,9 +24,9 @@ Target "RestorePackages" (fun _ ->
   "Bugsnag.NET.sln" |> RestoreMSSolutionPackages id
 )
 
-"MSBuild" <== [ "Clean"; "RestorePackages" ]
-"Test"    <== [ "MSBuild" ]
-"Package:Project" <== [ "MSBuild" ]
-"Publish" <== [ "Package:Project" ]
+"MSBuild"         <== ["Clean"; "RestorePackages"]
+"Test"            <== ["MSBuild"]
+"Package:Project" <== ["MSBuild"]
+"Publish"         <== ["Package:Project"]
 
 RunTargetOrDefault "MSBuild"
