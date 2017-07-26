@@ -43,5 +43,6 @@ namespace Bugsnag.NET.Request
         public int? ColumnNumber { get; set; }
         public string Method { get; set; }
         public bool InProject { get; set; }
+        public IDictionary<int, string> Code { get; } = new Dictionary<int, string>();
     }
 }

@@ -24,7 +24,8 @@ namespace Bugsnag.Common
         [JsonProperty("inProject")]
         bool InProject { get; }
 
-        // TODO: Code
+        [JsonProperty("code")]
+        IDictionary<int, string> Code { get; }
     }
 
     public interface IMutableStackTraceLine : IStackTraceLine
@@ -34,7 +35,5 @@ namespace Bugsnag.Common
         new int? ColumnNumber { get; set; }
         new string Method { get; set; }
         new bool InProject { get; set; }
-
-        // TODO: Code
     }
 }

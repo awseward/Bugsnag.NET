@@ -39,5 +39,7 @@ namespace Bugsnag.PCL.Request
         public string Method { get; private set; }
 
         public bool InProject { get; private set; }
+
+        public IDictionary<int, string> Code { get; } = new Dictionary<int, string>();
     }
 }
