@@ -1,6 +1,7 @@
+RESTRICTION: == net45
 NUGET
   remote: https://api.nuget.org/v3/index.json
     Newtonsoft.Json (8.0.2)
     NuGet.CommandLine (4.3)
-    NUnit (2.6.4) - restriction: >= net45
-    NUnitTestAdapter (2.1.1) - restriction: >= net45
+    NUnit (2.6.4)
+    NUnitTestAdapter (2.1.1)
