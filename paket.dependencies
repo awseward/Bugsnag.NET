@@ -1,0 +1,8 @@
+source C:\LocalNuget
+source http://104.130.118.213/nuget
+source https://api.nuget.org/v3/index.json
+
+nuget NuGet.CommandLine
+nuget Newtonsoft.Json 8.0.2
+nuget NUnit 2.6.4 restriction: >= net45
+nuget NUnitTestAdapter 2.1.1 restriction: >= net45
