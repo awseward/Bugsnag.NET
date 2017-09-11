@@ -1,5 +1,5 @@
-#r @"._fake/packages/FAKE/tools/FakeLib.dll"
-#r @"._fake/packages/FSharp.FakeTargets/tools/FSharp.FakeTargets.dll"
+#r @"./packages/fake/tools/FakeLib.dll"
+#r @"./packages/fsharp.faketargets/tools/FSharp.FakeTargets.dll"
 
 open Fake
 open NuGetHelper

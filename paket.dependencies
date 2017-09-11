@@ -1,7 +1,10 @@
 framework: net45
 source https://api.nuget.org/v3/index.json
 
-nuget NuGet.CommandLine
-nuget Newtonsoft.Json 8.0.2
 nuget NUnit 2.6.4 restriction: >= net45
 nuget NUnitTestAdapter 2.1.1 restriction: >= net45
+nuget Newtonsoft.Json
+nuget NuGet.CommandLine
+nuget fake 4.60.0
+nuget fsharp.faketargets
+nuget nunit.runners 2.6.4

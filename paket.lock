@@ -1,7 +1,10 @@
 RESTRICTION: == net45
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    Newtonsoft.Json (8.0.2)
+    fake (4.60)
+    fsharp.faketargets (0.11.1)
+    Newtonsoft.Json (10.0.3)
     NuGet.CommandLine (4.3)
     NUnit (2.6.4)
+    nunit.runners (2.6.4)
     NUnitTestAdapter (2.1.1)

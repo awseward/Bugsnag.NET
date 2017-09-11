@@ -1,7 +1,5 @@
 #! /bin/sh
 
-cd ._fake
-./paket.sh restore
-cd ..
+./paket.sh restore --fail-on-checks
 
-./._fake/packages/FAKE/tools/FAKE.exe build.fsx $@
+./packages/fake/tools/FAKE.exe build.fsx $@
