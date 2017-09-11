@@ -1,4 +1,3 @@
-framework: net45
 source https://api.nuget.org/v3/index.json
 
 nuget NUnit 2.6.4 restriction: >= net45
