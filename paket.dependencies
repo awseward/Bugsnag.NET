@@ -1,5 +1,3 @@
-source C:\LocalNuget
-source http://104.130.118.213/nuget
 source https://api.nuget.org/v3/index.json
 
 nuget NuGet.CommandLine
