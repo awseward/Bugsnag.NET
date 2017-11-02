@@ -19,6 +19,7 @@ namespace Bugsnag.PCL
         public IDevice Device { get; set; } = new Device();
         public INotifier Notifier { get; set; } = new Notifier();
         public Func<IMutableStackTraceLine, IStackTraceLine> FinalizeStacktraceLine { get; set; } = x => x;
+        public Func<IMutableEvent, IEvent> FinalizeEvent { get; set; } = x => x;
 
         public Task<HttpResponseMessage> ErrorAsync(Exception ex, IUser user, object metadata)
         {
