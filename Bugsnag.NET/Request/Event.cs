@@ -8,7 +8,7 @@ using Bugsnag.Common;
 
 namespace Bugsnag.NET.Request
 {
-    public class Event : IEvent
+    public class Event : IMutableEvent
     {
         public Event(Exception ex) : this(ex, x => x) { }
         public Event(Exception ex, Func<IMutableStackTraceLine, IStackTraceLine> transformStacktraceLine)
