@@ -17,7 +17,7 @@ namespace Bugsnag.PCL
             IUser user,
             object metadata)
         {
-            return new Event(ex)
+            var @event = new Event(ex)
             {
                 App = snagger.App,
                 Device = snagger.Device,
@@ -25,6 +25,8 @@ namespace Bugsnag.PCL
                 Severity = severity.ToString(),
                 MetaData = metadata,
             };
+
+            return snagger.FinalizeEvent(@event);
         }
 
         public static IEvent CreateEvent(
@@ -34,7 +36,7 @@ namespace Bugsnag.PCL
             IUser user,
             object metadata)
         {
-            return new Event(unwrapped)
+            var @event = new Event(unwrapped)
             {
                 App = snagger.App,
                 Device = snagger.Device,
@@ -42,6 +44,8 @@ namespace Bugsnag.PCL
                 Severity = severity.ToString(),
                 MetaData = metadata,
             };
+
+            return snagger.FinalizeEvent(@event);
         }
 
     }

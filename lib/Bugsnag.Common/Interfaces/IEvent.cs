@@ -42,4 +42,18 @@ namespace Bugsnag.Common
         [Obsolete("Avoid using this if possible")]
         void AddContext(string memberName, string sourceFilePath, int sourceLineNumber);
     }
+
+    public interface IMutableEvent : IEvent
+    {
+        new string PayloadVersion { get; set; }
+        new IEnumerable<IError> Errors { get; set; }
+        new IEnumerable<IThread> Threads { get; set; }
+        new string Context { get; set; }
+        new string GroupingHash { get; set; }
+        new string Severity { get; set; }
+        new IUser User { get; set; }
+        new IApp App { get; set; }
+        new IDevice Device { get; set; }
+        new object MetaData { get; set; }
+    }
 }

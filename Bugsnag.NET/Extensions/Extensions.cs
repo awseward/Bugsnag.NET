@@ -17,7 +17,7 @@ namespace Bugsnag.NET
             IUser user,
             object metadata)
         {
-            return new Event(ex, snagger.FinalizeStacktraceLine)
+            var @event = new Event(ex, snagger.FinalizeStacktraceLine)
             {
                 App = snagger.App,
                 Device = snagger.Device,
@@ -25,6 +25,8 @@ namespace Bugsnag.NET
                 Severity = severity.ToString(),
                 MetaData = metadata,
             };
+
+            return snagger.FinalizeEvent(@event);
         }
 
         public static IEvent CreateEvent(
@@ -34,7 +36,7 @@ namespace Bugsnag.NET
             IUser user,
             object metadata)
         {
-            return new Event(unwrapped, snagger.FinalizeStacktraceLine)
+            var @event = new Event(unwrapped, snagger.FinalizeStacktraceLine)
             {
                 App = snagger.App,
                 Device = snagger.Device,
@@ -42,6 +44,8 @@ namespace Bugsnag.NET
                 Severity = severity.ToString(),
                 MetaData = metadata,
             };
+
+            return snagger.FinalizeEvent(@event);
         }
 
     }

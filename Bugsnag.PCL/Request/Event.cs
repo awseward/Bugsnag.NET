@@ -6,7 +6,7 @@ using Bugsnag.Common.Extensions;
 
 namespace Bugsnag.PCL.Request
 {
-    public class Event : IEvent
+    public class Event : IMutableEvent
     {
         public Event(Exception ex)
         {
