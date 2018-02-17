@@ -51,7 +51,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ExceptionMetadataTests.cs" />
     <Compile Include="StacktracelineParsingTests.cs" />
     <Compile Include="ExceptionExtensionTests.cs" />
     <Compile Include="Integration\IntegrationTests.PCL.cs" />

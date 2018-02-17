@@ -2,6 +2,7 @@
 #r @"._fake/packages/FSharp.FakeTargets/tools/FSharp.FakeTargets.dll"
 
 open Fake
+open Fake.Testing.XUnit2
 open NuGetHelper
 open RestorePackageHelper
 
@@ -20,12 +21,21 @@ datNET.Targets.initialize (fun p ->
   }
 )
 
+//let cleanRebuild = Fake.MSBuildHelper.MSBuild null "Clean;Rebuild"
+
+Target "Xunit" (fun _ ->
+  "test/Bugsnag.NET.FSharp.Tests/bin/Release/Bugsnag.NET.FSharp.Tests.dll"
+  |> Seq.singleton
+  |> xUnit2 id
+)
+
 Target "RestorePackages" (fun _ ->
   "Bugsnag.NET.sln" |> RestoreMSSolutionPackages id
 )
 
 "MSBuild"         <== ["Clean"; "RestorePackages"]
-"Test"            <== ["MSBuild"]
+"Test"            <== ["MSBuild"; "Xunit"]
+"Xunit"           <== ["MSBuild"]
 "Package:Project" <== ["MSBuild"]
 "Publish"         <== ["Package:Project"]
 
