@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Content Include="packages.config" />
+    <Compile Include="Thing.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -68,6 +69,13 @@
       <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\Bugsnag.Common\Bugsnag.Common.csproj">
+      <Name>Bugsnag.Common</Name>
+      <Project>{75bdcdb7-3fc4-4dd2-b60c-e1b5344f1112}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

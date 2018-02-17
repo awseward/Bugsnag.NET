@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +51,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ExceptionMetadataTests.cs" />
     <Compile Include="StacktracelineParsingTests.cs" />
     <Compile Include="ExceptionExtensionTests.cs" />
     <Compile Include="Integration\IntegrationTests.PCL.cs" />
@@ -83,6 +85,10 @@
     <ProjectReference Include="..\lib\Bugsnag.Common\Bugsnag.Common.csproj">
       <Project>{75bdcdb7-3fc4-4dd2-b60c-e1b5344f1112}</Project>
       <Name>Bugsnag.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Bugsnag.NET.FSharp\Bugsnag.NET.FSharp.fsproj">
+      <Project>{fe7d1b76-a432-47c1-96a2-39e596205fff}</Project>
+      <Name>Bugsnag.NET.FSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
