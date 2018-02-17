@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.NET", "Bugsnag.NET\Bugsnag.NET.csproj", "{C1DE70F2-BC01-4995-B262-2F3FB5104ACE}"
 EndProject
@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugsnag.Common", "lib\Bugsnag.Common\Bugsnag.Common.csproj", "{75BDCDB7-3FC4-4DD2-B60C-E1B5344F1112}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Bugsnag.NET.FSharp", "src\Bugsnag.NET.FSharp\Bugsnag.NET.FSharp.fsproj", "{FE7D1B76-A432-47C1-96A2-39E596205FFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,8 +94,27 @@ Global
 		{75BDCDB7-3FC4-4DD2-B60C-E1B5344F1112}.Release|x64.Build.0 = Release|Any CPU
 		{75BDCDB7-3FC4-4DD2-B60C-E1B5344F1112}.Release|x86.ActiveCfg = Release|Any CPU
 		{75BDCDB7-3FC4-4DD2-B60C-E1B5344F1112}.Release|x86.Build.0 = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|x64.Build.0 = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Debug|x86.Build.0 = Debug|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|ARM.Build.0 = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|x64.ActiveCfg = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|x64.Build.0 = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|x86.ActiveCfg = Release|Any CPU
+		{FE7D1B76-A432-47C1-96A2-39E596205FFF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2F44823-FD21-4151-888E-1B0B76899D13}
 	EndGlobalSection
 EndGlobal
