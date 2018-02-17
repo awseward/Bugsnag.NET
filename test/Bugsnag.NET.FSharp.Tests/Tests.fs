@@ -2,31 +2,67 @@
 
 open Xunit
 
-module TestingUtils =
-  let assertSome<'a> = Option.isSome<'a> >> Assert.True
-  let assertNone<'a> = Option.isNone<'a> >> Assert.True
+module Utils =
+  let assertEqual<'a> (expected: 'a) (actual: 'a) =
+    Assert.Equal(expected, actual)
+
+  let assertSome input =
+    input
+    |> (Option.isSome >> Assert.True)
+
+    input.Value
+
+  let assertNone input =
+    input
+    |> (Option.isNone >> Assert.True)
+
+    input
+
+  let mustBeSome input =
+    match input with
+    | Some x -> x
+    | None ->
+        input
+        |> sprintf "Cannot be None. Input: %A"
+        |> failwith
+
+  let must fn input =
+    match fn input with
+    | Some x -> x
+    | None ->
+        input
+        |> sprintf "Result cannot be None. Input: %A"
+        |> failwith
 
 module ExceptionMetadataTests =
   open ExceptionMetadata
   open System
 
   [<FactAttribute>]
-  let ``tryReadMetadataId gives None when a metadata id has not been assigned`` () =
+  let ``tryReadMetadataId gives None when id not found`` () =
+    InvalidOperationException()
+    |> tryReadMetadataId
+    |> Utils.assertNone
+
+  [<FactAttribute>]
+  let ``tryReadMetadataId reads metadata id`` () =
     let ex = InvalidOperationException()
+    let preexistingId =
+      ex
+      |> (Utils.must tryIdentify)
 
     ex
     |> tryReadMetadataId
-    |> TestingUtils.assertNone
+    |> function
+        | Some idFromRead -> Utils.assertEqual preexistingId idFromRead
+        | _ -> failwith "Failed to read"
 
   [<FactAttribute>]
-  let ``tryReadMetadataId reads the correct metadata id that was written`` () =
+  let ``tryIdentify acts as read or ceate`` () =
     let ex = InvalidOperationException()
+    let identify = Utils.must tryIdentify
+    let preexistingId = identify ex
 
-    match tryWriteNewMetadataId ex with
-    | Some idFromWrite ->
-        ex
-        |> tryReadMetadataId
-        |> function
-            | Some idFromRead -> Assert.Equal(idFromWrite, idFromRead)
-            | _ -> failwith "FIXME"
-    | _ -> failwith "FIXME"
+    ex
+    |> identify
+    |> Utils.assertEqual preexistingId

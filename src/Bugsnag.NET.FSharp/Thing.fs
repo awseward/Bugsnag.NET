@@ -12,14 +12,19 @@ module ExceptionMetadata =
     with
     | _ -> None
 
-  let tryWriteNewMetadataId (ex: Exception) : Guid option =
-    let newId = Guid.NewGuid()
+  let tryIdentify (ex: Exception) =
+    ex
+    |> tryReadMetadataId
+    |> function
+        | None ->
+            let newId = Guid.NewGuid()
 
-    try
-        ex.Data.[_idKey] <- (newId :> obj)
-        Some newId
-    with
-    | _ -> None
+            try
+                ex.Data.[_idKey] <- (newId :> obj)
+                Some newId
+            with
+            | _ -> None
+        | existing -> existing
 
 module Thing =
   open Microsoft.FSharp.Collections
