@@ -6,11 +6,17 @@ module ExceptionMetadata =
 
   let private _idKey = "__TODO_BUGSNAG_ID__"
 
-  let tryReadMetadataId (ex: Exception) : Guid option =
+  let rec tryReadMetadataId (ex: Exception) : Guid option =
     try
       ex.Data.[_idKey] :?> Guid |> Some
     with
     | _ -> None
+    |> function
+        | None ->
+            if isNull ex.InnerException
+            then None
+            else tryReadMetadataId ex.InnerException
+        | idOpt -> idOpt
 
   let tryIdentify (ex: Exception) =
     ex
