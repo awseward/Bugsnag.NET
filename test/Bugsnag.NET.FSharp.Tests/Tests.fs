@@ -6,15 +6,22 @@ module Utils =
   let assertEqual<'a> (expected: 'a) (actual: 'a) =
     Assert.Equal(expected, actual)
 
-  let assertSome input =
+  let assertSome<'a> (input: 'a option) =
     input
-    |> (Option.isSome >> Assert.True)
+    |> Option.isSome<'a>
+    |> (fun isSome ->
+        let failureMessage =
+            input
+            |> sprintf "Expected Some<%s>, but got: %A" typeof<'a>.Name
+
+        Assert.True(isSome, failureMessage))
 
     input.Value
 
   let assertNone input =
     input
-    |> (Option.isNone >> Assert.True)
+    |> Option.isNone
+    |> (fun isNone -> Assert.True(isNone, sprintf "Expected None, but got: %A" input))
 
     input
 
@@ -39,23 +46,20 @@ module ExceptionMetadataTests =
   open System
 
   [<FactAttribute>]
-  let ``tryReadMetadataId gives None when id not found`` () =
-    InvalidOperationException()
+  let ``tryRead gives None when id not found`` () =
+    Exception()
     |> tryReadMetadataId
     |> Utils.assertNone
 
   [<FactAttribute>]
-  let ``tryReadMetadataId reads metadata id`` () =
-    let ex = InvalidOperationException()
-    let preexistingId =
-      ex
-      |> (Utils.must tryIdentify)
+  let ``tryRead reads metadata id`` () =
+    let ex = Exception()
+    let metadataId = ex |> (Utils.must tryIdentify)
 
     ex
     |> tryReadMetadataId
-    |> function
-        | Some idFromRead -> Utils.assertEqual preexistingId idFromRead
-        | _ -> failwith "Failed to read"
+    |> Utils.assertSome
+    |> Utils.assertEqual metadataId
 
   [<FactAttribute>]
   let ``tryIdentify acts as read or ceate`` () =
