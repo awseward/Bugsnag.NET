@@ -62,6 +62,36 @@ module ExceptionMetadataTests =
     |> Utils.assertEqual metadataId
 
   [<FactAttribute>]
+  let ``tryRead reads ids from inner Exceptions`` () =
+    let innerEx = Exception("Inner exception")
+    let metadataId = innerEx |> (Utils.must tryIdentify)
+    let outerEx = Exception("Outer exception", innerEx)
+
+    outerEx
+    |> tryReadMetadataId
+    |> Utils.assertSome
+    |> Utils.assertEqual metadataId
+
+  [<FactAttribute>]
+  let ``tryRead reads ids from deeply nested Exceptions`` () =
+    let rec wrapException maxDepth depth ex =
+      if depth >= maxDepth
+      then ex
+      else
+        ex
+        |> (fun e -> Exception(sprintf "Wrapping exception (%i)" depth, e))
+        |> wrapException maxDepth (depth + 1)
+
+    let innerMostEx = Exception("Inner exception")
+    let outerMostEx = wrapException 5 0 innerMostEx
+    let metadataId = innerMostEx |> (Utils.must tryIdentify)
+
+    outerMostEx
+    |> tryReadMetadataId
+    |> Utils.assertSome
+    |> Utils.assertEqual metadataId
+
+  [<FactAttribute>]
   let ``tryIdentify acts as read or ceate`` () =
     let ex = InvalidOperationException()
     let identify = Utils.must tryIdentify
