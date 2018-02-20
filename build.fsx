@@ -21,8 +21,6 @@ datNET.Targets.initialize (fun p ->
   }
 )
 
-//let cleanRebuild = Fake.MSBuildHelper.MSBuild null "Clean;Rebuild"
-
 Target "Xunit" (fun _ ->
   "test/Bugsnag.NET.FSharp.Tests/bin/Release/Bugsnag.NET.FSharp.Tests.dll"
   |> Seq.singleton
