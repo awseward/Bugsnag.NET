@@ -2,49 +2,65 @@
 
 open System
 
-module ExceptionMetadata =
-
+module ExceptionTagging =
   let private _idKey = "__TODO_BUGSNAG_ID__"
 
-  let rec tryReadMetadataId (ex: Exception) : Guid option =
-    try
-      ex.Data.[_idKey] :?> Guid |> Some
-    with
-    | _ -> None
-    |> function
-        | None ->
-            if isNull ex.InnerException
-            then None
-            else tryReadMetadataId ex.InnerException
-        | idOpt -> idOpt
+  let rec tryRead (ex: Exception) : Guid option =
+    let tryRead' () =
+      try
+        ex.Data.[_idKey] :?> Guid |> Some
+      with
+      | _ -> None
+
+    match tryRead'() with
+    | Some _ as result                -> result
+    | _ when isNull ex.InnerException -> None
+    | _                               -> tryRead ex.InnerException
 
   let tryIdentify (ex: Exception) =
+    let tryWrite () =
+      try
+        Guid.NewGuid()
+        |> (fun guid -> ex.Data.Add(_idKey, guid); guid)
+        |> Some
+      with
+      | _ -> None
+
     ex
-    |> tryReadMetadataId
+    |> tryRead
     |> function
-        | None ->
-            let newId = Guid.NewGuid()
+        | Some _ as result -> result
+        | _ -> tryWrite()
 
-            try
-                ex.Data.[_idKey] <- (newId :> obj)
-                Some newId
-            with
-            | _ -> None
-        | existing -> existing
+type MetadataTracker () =
+  let mutable _map = Map.empty<Guid, Map<string, string>>
 
-module Thing =
-  open Microsoft.FSharp.Collections
+  member this.Map = _map
 
-  type TagSetId = Guid
+  member this.Set guid (key: string, value: string) =
+    let map' =
+      _map
+      |> Map.tryFind guid
+      |> function
+          | Some metadata -> _map.Add(guid, metadata.Add(key, value))
+          | _             -> _map.Add(guid, Map.empty.Add(key, value))
 
-  type TagSet =
-    { Id: TagSetId
-      Tags: Map<string, string list> }
+    _map <- map'
 
-  let private _tagSets = Map.empty<TagSetId, TagSet>
+  member this.TryRemove guid =
+    let metadataOpt = _map |> Map.tryFind guid
 
-  let tag (ex: Exception) (key: string) (value: string) : unit =
-    ()
+    _map <- _map.Remove guid
 
-  let tryGetTags (ex: Exception) : TagSet option =
-    None
+    metadataOpt
+
+module MetadataTracking =
+  let tryAssoc (tracker: MetadataTracker) ex (key, value) =
+    ex
+    |> ExceptionTagging.tryIdentify
+    |> Option.iter (fun guid -> tracker.Set guid (key, value))
+
+  let tryRemove (tracker: MetadataTracker) ex =
+    ex
+    |> ExceptionTagging.tryIdentify
+    |> Option.bind (tracker.TryRemove)

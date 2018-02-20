@@ -1,5 +1,6 @@
 ﻿namespace Bugsnag.NET.FSharp
 
+open System
 open Xunit
 
 module Utils =
@@ -41,38 +42,37 @@ module Utils =
         |> sprintf "Result cannot be None. Input: %A"
         |> failwith
 
-module ExceptionMetadataTests =
-  open ExceptionMetadata
-  open System
+module ExceptionTaggingTests =
+  open ExceptionTagging
 
-  [<FactAttribute>]
+  [<Fact>]
   let ``tryRead gives None when id not found`` () =
     Exception()
-    |> tryReadMetadataId
+    |> tryRead
     |> Utils.assertNone
 
-  [<FactAttribute>]
+  [<Fact>]
   let ``tryRead reads metadata id`` () =
     let ex = Exception()
     let metadataId = ex |> (Utils.must tryIdentify)
 
     ex
-    |> tryReadMetadataId
+    |> tryRead
     |> Utils.assertSome
     |> Utils.assertEqual metadataId
 
-  [<FactAttribute>]
+  [<Fact>]
   let ``tryRead reads ids from inner Exceptions`` () =
     let innerEx = Exception("Inner exception")
     let metadataId = innerEx |> (Utils.must tryIdentify)
     let outerEx = Exception("Outer exception", innerEx)
 
     outerEx
-    |> tryReadMetadataId
+    |> tryRead
     |> Utils.assertSome
     |> Utils.assertEqual metadataId
 
-  [<FactAttribute>]
+  [<Fact>]
   let ``tryRead reads ids from deeply nested Exceptions`` () =
     let rec wrapException maxDepth depth ex =
       if depth >= maxDepth
@@ -87,11 +87,11 @@ module ExceptionMetadataTests =
     let metadataId = innerMostEx |> (Utils.must tryIdentify)
 
     outerMostEx
-    |> tryReadMetadataId
+    |> tryRead
     |> Utils.assertSome
     |> Utils.assertEqual metadataId
 
-  [<FactAttribute>]
+  [<Fact>]
   let ``tryIdentify acts as read or ceate`` () =
     let ex = InvalidOperationException()
     let identify = Utils.must tryIdentify
@@ -100,3 +100,42 @@ module ExceptionMetadataTests =
     ex
     |> identify
     |> Utils.assertEqual preexistingId
+
+module MetadataTrackerTests =
+  [<Fact>]
+  let ``Set assigns a key and value under a GUID`` () =
+    let tracker = MetadataTracker()
+    let guid = Guid.NewGuid()
+    let (foo, bar) as fooBar = ("foo", "bar")
+
+    tracker.Set guid fooBar
+
+    tracker.Map
+    |> Utils.assertEqual (Map [(guid, (Map [(foo, bar)]))])
+
+  [<Fact>]
+  let ``TryRemove gives the map under the given Guid`` () =
+    let tracker = MetadataTracker()
+    let guid = Guid.NewGuid()
+    let (foo, bar) as fooBar = ("foo", "bar")
+
+    tracker.Set guid fooBar
+
+    guid
+    |> tracker.TryRemove
+    |> Utils.assertSome
+    |> Utils.assertEqual (Map [(foo, bar)])
+
+module MetadataTrackingTests =
+  [<Fact>]
+  let ``tryAssoc associates a key and value to an Exception`` () =
+    let tracker = MetadataTracker()
+    let ex = Exception("Oops!")
+    let (foo, bar) as fooBar = ("foo", "bar")
+
+    fooBar |> MetadataTracking.tryAssoc tracker ex
+
+    ex
+    |> MetadataTracking.tryRemove tracker
+    |> Utils.assertSome
+    |> Utils.assertEqual (Map [(foo, bar)])
