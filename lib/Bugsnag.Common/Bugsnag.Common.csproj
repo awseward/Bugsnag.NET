@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\INotice.cs" />
     <Compile Include="Interfaces\INotifier.cs" />
     <Compile Include="Interfaces\IStackTraceLine.cs" />
+    <Compile Include="Interfaces\ITabBuilder.cs" />
     <Compile Include="Interfaces\IThread.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
