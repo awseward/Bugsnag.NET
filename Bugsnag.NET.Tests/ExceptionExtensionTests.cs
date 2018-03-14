@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Bugsnag.Common.Extensions;
+using Bugsnag.Common;
 
 namespace Bugsnag.NET.Tests
 {
@@ -57,6 +58,48 @@ namespace Bugsnag.NET.Tests
 
             Assert.AreEqual(topLevelException, exceptions.FirstOrDefault());
             Assert.AreEqual(innerException, exceptions.LastOrDefault());
+        }
+
+        public void GenerateDeepTypesKey_works_on_simple_exceptions()
+        {
+            var ex = new InvalidOperationException("");
+
+            var expectedTypesKey = "InvalidOperationException()";
+
+            Assert.AreEqual(
+                expected: expectedTypesKey,
+                actual: ExceptionExtensions.GenerateDeepTypesKey(ex)
+            );
+        }
+
+        [Test]
+        public void GenerateDeepTypesKey_works_on_decently_nested_exceptions_including_AggregateExceptions()
+        {
+            var ex =
+                new AggregateException(
+                    new InvalidOperationException("",
+                        new AggregateException(
+                            new InvalidOperationException(),
+                            new Exception())
+                    ),
+                    new DivideByZeroException(),
+                    new ArgumentException("", new FieldAccessException())
+                );
+
+            var expectedTypesKey = "AggregateException[InvalidOperationException(AggregateException[InvalidOperationException(),Exception()]),DivideByZeroException(),ArgumentException(FieldAccessException())]";
+
+            Assert.AreEqual(
+                expected: expectedTypesKey,
+                actual: ExceptionExtensions.GenerateDeepTypesKey(ex)
+            );
+        }
+
+        [Test]
+        public void GenerateDeepTypesKey_returns_empty_string_when_given_null_input()
+        {
+            Exception ex = null;
+
+            Assert.IsNull(ExceptionExtensions.GenerateDeepTypesKey(ex));
         }
     }
 }
