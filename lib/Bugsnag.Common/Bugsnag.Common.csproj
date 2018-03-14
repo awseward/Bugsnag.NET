@@ -40,6 +40,7 @@
     <Compile Include="BugsnagClient.cs" />
     <Compile Include="ExceptionInspector.cs" />
     <Compile Include="Extensions\CommonExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Interfaces\IApp.cs" />
     <Compile Include="Interfaces\IBugsnagger.cs" />
     <Compile Include="Interfaces\IClient.cs" />
