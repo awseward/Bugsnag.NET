@@ -26,7 +26,7 @@ namespace Bugsnag.NET
                 MetaData = metadata,
             };
 
-            return snagger.FinalizeEvent(@event);
+            return snagger.FinalizeEvent(@event, ex);
         }
 
         public static IEvent CreateEvent(
@@ -45,7 +45,10 @@ namespace Bugsnag.NET
                 MetaData = metadata,
             };
 
-            return snagger.FinalizeEvent(@event);
+            return snagger.FinalizeEvent(
+                @event,
+                unwrapped.FirstOrDefault() // TODO: Think about this
+            );
         }
 
     }
