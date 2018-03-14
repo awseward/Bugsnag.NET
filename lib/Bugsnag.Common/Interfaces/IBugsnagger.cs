@@ -16,7 +16,7 @@ namespace Bugsnag.Common
         IDevice Device { get; set; }
 
         Func<IMutableStackTraceLine, IStackTraceLine> FinalizeStacktraceLine { get; set; }
-        Func<IMutableEvent, IEvent> FinalizeEvent { get; set; }
+        Func<IMutableEvent, Exception, IEvent> FinalizeEvent { get; set; }
 
         void Error(Exception ex, IUser user, object metadata);
         void Warning(Exception ex, IUser user, object metadata);
