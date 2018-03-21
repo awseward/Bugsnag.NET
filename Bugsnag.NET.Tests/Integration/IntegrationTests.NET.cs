@@ -15,12 +15,6 @@ namespace Bugsnag.Tests.Integration
     public class IntegrationTests_NET
     {
         [Test]
-        public void SendError_StaticApproach()
-        {
-            Utils.Run(StaticApproach.TestApp);
-        }
-
-        [Test]
         public void SendError_InstanceApproach()
         {
             Utils.Run(
@@ -55,35 +49,5 @@ namespace Bugsnag.Tests.Integration
                 ReleaseStage = "test",
             },
         };
-
-        class StaticApproach
-        {
-            public static ITestApp TestApp { get; } = new StaticApproachApp(
-                _SetApiKey,
-                _SetApp,
-                _OnUnhandledException
-            );
-
-            static void _SetApiKey(string key) => BsNET.Bugsnag.ApiKey = key;
-            static void _SetApp() => BsNET.Bugsnag.App = new App
-            {
-                Version = "1.2.3",
-                ReleaseStage = "test",
-            };
-            static void _OnUnhandledException(Exception ex)
-            {
-                var client = BsNET.Bugsnag.Error;
-                var @event = client.GetEvent(ex, null, _GetMetadata());
-
-                client.Notify(@event);
-            }
-
-            static object _GetMetadata() =>
-                new
-                {
-                    Foo = "bar",
-                    Baz = (object)null,
-                };
-        }
     }
 }
