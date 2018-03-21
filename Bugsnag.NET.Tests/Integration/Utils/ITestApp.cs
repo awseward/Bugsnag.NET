@@ -10,9 +10,4 @@ namespace Bugsnag.Tests.Integration
     {
         void Run(string testInfo);
     }
-
-    interface IAsyncTestApp
-    {
-        Task Run(string testInfo);
-    }
 }

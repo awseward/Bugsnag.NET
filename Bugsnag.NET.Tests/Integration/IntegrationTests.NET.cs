@@ -21,24 +21,10 @@ namespace Bugsnag.Tests.Integration
         }
 
         [Test]
-        public async Task SendError_StaticApproachAsync()
-        {
-            await Utils.Run(StaticApproach.AsyncTestApp);
-        }
-
-        [Test]
         public void SendError_InstanceApproach()
         {
             Utils.Run(
                 _instanceApproach.TestApp(snagger => snagger.Error)
-            );
-        }
-
-        [Test]
-        public async Task SendError_InstanceApproachAsync()
-        {
-            await Utils.Run(
-                _instanceApproach.AsyncTestApp(snagger => snagger.ErrorAsync)
             );
         }
 
@@ -51,26 +37,10 @@ namespace Bugsnag.Tests.Integration
         }
 
         [Test]
-        public async Task SendWarning_InstanceApproachAsync()
-        {
-            await Utils.Run(
-                _instanceApproach.AsyncTestApp(snagger => snagger.WarningAsync)
-            );
-        }
-
-        [Test]
         public void SendInfo_InstanceApproach()
         {
             Utils.Run(
                 _instanceApproach.TestApp(snagger => snagger.Info)
-            );
-        }
-
-        [Test]
-        public async Task SendInfo_InstanceApproachAsync()
-        {
-            await Utils.Run(
-                _instanceApproach.AsyncTestApp(snagger => snagger.InfoAsync)
             );
         }
 
@@ -93,11 +63,6 @@ namespace Bugsnag.Tests.Integration
                 _SetApp,
                 _OnUnhandledException
             );
-            public static IAsyncTestApp AsyncTestApp { get; } = new StaticApproachAsyncApp(
-                _SetApiKey,
-                _SetApp,
-                _OnUnhandledExceptionAsync
-            );
 
             static void _SetApiKey(string key) => BsNET.Bugsnag.ApiKey = key;
             static void _SetApp() => BsNET.Bugsnag.App = new App
@@ -111,13 +76,6 @@ namespace Bugsnag.Tests.Integration
                 var @event = client.GetEvent(ex, null, _GetMetadata());
 
                 client.Notify(@event);
-            }
-            static Task _OnUnhandledExceptionAsync(Exception ex)
-            {
-                var client = BsNET.Bugsnag.Error;
-                var @event = client.GetEvent(ex, null, _GetMetadata());
-
-                return client.NotifyAsync(@event);
             }
 
             static object _GetMetadata() =>

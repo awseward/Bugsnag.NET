@@ -44,11 +44,6 @@ namespace Bugsnag.PCL
         public void Notify(IEnumerable<IEvent> events) => Snagger.Notify(events);
         public void Notify(IEnumerable<IEvent> events, bool useSSL) => Snagger.Notify(events, useSSL);
 
-        public Task<HttpResponseMessage> NotifyAsync(IEvent evt) => Snagger.NotifyAsync(evt);
-        public Task<HttpResponseMessage> NotifyAsync(IEvent evt, bool useSSL) => Snagger.NotifyAsync(evt, useSSL);
-        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events) => Snagger.NotifyAsync(events);
-        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL) => Snagger.NotifyAsync(events, useSSL);
-
         public IEvent GetEvent(Exception ex, IUser user, object metaData)
         {
             return GetEvent(ex, user, null, metaData);

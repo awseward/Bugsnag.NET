@@ -22,18 +22,9 @@ namespace Bugsnag.Common
         void Warning(Exception ex, IUser user, object metadata);
         void Info(Exception ex, IUser user, object metadata);
 
-        Task<HttpResponseMessage> ErrorAsync(Exception ex, IUser user, object metadata);
-        Task<HttpResponseMessage> WarningAsync(Exception ex, IUser user, object metadata);
-        Task<HttpResponseMessage> InfoAsync(Exception ex, IUser user, object metadata);
-
         void Notify(IEvent @event);
         void Notify(IEvent @event, bool useHttps);
         void Notify(IEnumerable<IEvent> events);
         void Notify(IEnumerable<IEvent> events, bool useHttps);
-
-        Task<HttpResponseMessage> NotifyAsync(IEvent @event);
-        Task<HttpResponseMessage> NotifyAsync(IEvent @event, bool useSSL);
-        Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events);
-        Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL);
     }
 }

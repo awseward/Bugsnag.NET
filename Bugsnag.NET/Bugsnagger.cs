@@ -21,49 +21,6 @@ namespace Bugsnag.NET
         public Func<IMutableStackTraceLine, IStackTraceLine> FinalizeStacktraceLine { get; set; } = x => x;
         public Func<IMutableEvent, Exception, IEvent> FinalizeEvent { get; set; } = (@event, ex) => @event;
 
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> ErrorAsync(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Error, ex, user, metadata);
-
-            return NotifyAsync(@event);
-        }
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> WarningAsync(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Warning, ex, user, metadata);
-
-            return NotifyAsync(@event);
-        }
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> InfoAsync(Exception ex, IUser user, object metadata)
-        {
-            var @event = this.CreateEvent(Severity.Info, ex, user, metadata);
-
-            return NotifyAsync(@event);
-        }
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> NotifyAsync(IEvent @event) => NotifyAsync(@event, true);
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> NotifyAsync(IEvent @event, bool useSSL) =>
-            NotifyAsync(new[] { @event }, useSSL);
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events) => NotifyAsync(events, true);
-
-        [Obsolete("Has not been verified to work yet")]
-        public Task<HttpResponseMessage> NotifyAsync(IEnumerable<IEvent> events, bool useSSL)
-        {
-            var notice = new Notice(ApiKey, Notifier, events);
-
-            return _Client.SendAsync(notice, useSSL);
-        }
-
-        [Obsolete("Prefer ErrorAsync")]
         public void Error(Exception ex, IUser user, object metadata)
         {
             var @event = this.CreateEvent(Severity.Error, ex, user, metadata);
@@ -71,7 +28,6 @@ namespace Bugsnag.NET
             Notify(@event);
         }
 
-        [Obsolete("Prefer WarningAsync")]
         public void Warning(Exception ex, IUser user, object metadata)
         {
             var @event = this.CreateEvent(Severity.Warning, ex, user, metadata);
@@ -79,7 +35,6 @@ namespace Bugsnag.NET
             Notify(@event);
         }
 
-        [Obsolete("Prefer InfoAsync")]
         public void Info(Exception ex, IUser user, object metadata)
         {
             var @event = this.CreateEvent(Severity.Info, ex, user, metadata);
@@ -87,17 +42,13 @@ namespace Bugsnag.NET
             Notify(@event);
         }
 
-        [Obsolete("Prefer NotifyAsync")]
         public void Notify(IEvent @event) => Notify(@event, true);
 
-        [Obsolete("Prefer NotifyAsync")]
         public void Notify(IEvent @event, bool useHttps) =>
             Notify(new[] { @event }, useHttps);
 
-        [Obsolete("Prefer NotifyAsync")]
         public void Notify(IEnumerable<IEvent> events) => Notify(events, true);
 
-        [Obsolete("Prefer NotifyAsync")]
         public void Notify(IEnumerable<IEvent> events, bool useHttps)
         {
             var notice = new Notice(ApiKey, Notifier, events);
