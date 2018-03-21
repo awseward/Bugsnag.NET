@@ -54,10 +54,8 @@
     <Compile Include="ExceptionExtensionTests.cs" />
     <Compile Include="Integration\IntegrationTests.PCL.cs" />
     <Compile Include="Integration\Utils\InstanceApproachApp.cs" />
-    <Compile Include="Integration\Utils\InstanceApproachAsyncApp.cs" />
     <Compile Include="Integration\Utils\ITestApp.cs" />
     <Compile Include="Integration\Utils\StaticApproachApp.cs" />
-    <Compile Include="Integration\Utils\StaticApproachAsyncApp.cs" />
     <Compile Include="Integration\Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Integration\IntegrationTests.NET.cs" />

@@ -28,20 +28,6 @@ namespace Bugsnag.Tests.Integration
             Inconclusive();
         }
 
-        internal static async Task Run(
-            IAsyncTestApp app,
-            [CallerMemberName] string callerName = "[unknown test]",
-            [CallerFilePath] string sourceFilePath = "[unknown file]",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            var fileHint = $"{sourceFilePath}:{sourceLineNumber}";
-
-            await app.Run($"{callerName} ({sourceFilePath}:{sourceLineNumber})");
-
-            Inconclusive();
-        }
-
-
         public static void TriggerError(string testInfo)
         {
             throw new ApplicationException($"Error triggered by {testInfo}");
@@ -82,16 +68,6 @@ namespace Bugsnag.Tests.Integration
         public ITestApp TestApp(Func<IBugsnagger, Action<Exception, IUser, object>> getNotify)
         {
             return TestApp((snagger, ex) => getNotify(snagger)(ex, null, _GetMetadata()));
-        }
-
-        public IAsyncTestApp AsyncTestApp(Func<IBugsnagger, Exception, Task> notifyAsync)
-        {
-            return new InstanceApproachAsyncApp(_getSnagger(), notifyAsync);
-        }
-
-        public IAsyncTestApp AsyncTestApp(Func<IBugsnagger, Func<Exception, IUser, object, Task>> getNotify)
-        {
-            return AsyncTestApp((snagger, ex) => getNotify(snagger)(ex, null, _GetMetadata()));
         }
 
         object _GetMetadata() =>
