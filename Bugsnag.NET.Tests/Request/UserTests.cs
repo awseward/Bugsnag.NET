@@ -14,13 +14,12 @@ namespace Bugsnag.NET.Tests.Request
         static Guid _guidId = Guid.Parse("72eae7d5-b3c9-43fd-8fa6-5dae60d509a7");
         static string _stringId = "q5OKLQpuYNmtiZ5wx/Aa+JkozBKaSBKI9ImYRG+1==";
         static int _intId = 8675309;
-        static object[] _commonIds = new object[] { _guidId, _stringId, _intId };
         static string _name = "Robert Paulson";
         static string _email = "rpaulson@fight.club";
 
-        public static object[] CommonIds { get { return _commonIds; } }
+        public static object[] CommonIds { get; } = new object[] { _guidId, _stringId, _intId };
 
-        [TestCaseSource("CommonIds")]
+        [TestCaseSource(nameof(CommonIds))]
         public void IdIsCorrect(object id)
         {
             var user = _BuildUser(id, _name, _email);

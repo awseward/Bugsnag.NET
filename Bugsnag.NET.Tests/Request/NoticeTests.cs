@@ -15,17 +15,6 @@ namespace Bugsnag.NET.Tests.Request
     class NoticeTests
     {
         [Test]
-        public void HasCorrectSchema()
-        {
-            var schema = _GetSchema();
-            var notice = NoticeBuilder.GetNotice();
-            var json = JsonConvert.SerializeObject(notice);
-            var jObject = JObject.Parse(json);
-
-            Assert.IsTrue(jObject.IsValid(schema));
-        }
-
-        [Test]
         public void StackIsAbsent()
         {
             const string InternalErrorMessage = "An internal error has occurred!";
