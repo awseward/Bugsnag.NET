@@ -36,31 +36,17 @@ namespace Bugsnag.Common.Extensions
             );
         }
 
+        static StacktraceLineParser _stacktraceLineParser = new StacktraceLineParser();
+
         public static string FileParseFailureDefaultValue = "";
 
-        public static string ParseFile(this string line)
-        {
-            var match = Regex.Match(line, "in (.+):line");
-            if (match.Groups.Count < 2) { return FileParseFailureDefaultValue; }
+        public static string ParseFile(this string line) =>
+            _stacktraceLineParser.ParseFile(line);
 
-            return match.Groups[1].Value;
-        }
+        public static string ParseMethodName(this string line) =>
+            _stacktraceLineParser.ParseMethodName(line);
 
-        public static string ParseMethodName(this string line)
-        {
-            // to extract the full method name (with namespace)
-            var match = Regex.Match(line, "at ([^)]+[)])");
-            if (match.Groups.Count < 2) { return line; }
-
-            return match.Groups[1].Value;
-        }
-
-        public static int? ParseLineNumber(this string line)
-        {
-            var match = Regex.Match(line, ":line ([0-9]+)");
-            if (match.Groups.Count < 2) { return null; }
-
-            return Convert.ToInt32(match.Groups[1].Value);
-        }
+        public static int? ParseLineNumber(this string line) =>
+            _stacktraceLineParser.ParseLineNumber(line);
     }
 }
