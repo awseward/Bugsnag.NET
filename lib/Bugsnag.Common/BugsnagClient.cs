@@ -16,8 +16,17 @@ namespace Bugsnag.Common
         static HttpClient _HttpClient { get; } = new HttpClient();
 
         public void Send(INotice notice) => Send(notice, true);
+        public void Send(INotice notice, bool useSSL) => Send(notice, useSSL, _ => { });
+        public void Send(INotice notice, Action<Exception> onException) => Send(notice, true, onException);
 
-        public void Send(INotice notice, bool useSSL) => SendAsync(notice, useSSL).Wait();
+        public void Send(INotice notice, bool useSSL, Action<Exception> onException) => Task.Run(async () =>
+        {
+            try
+            {
+                await SendAsync(notice, useSSL);
+            }
+            catch (Exception ex) { onException(ex); }
+        });
 
         public Task<HttpResponseMessage> SendAsync(INotice notice) => SendAsync(notice, true);
 
